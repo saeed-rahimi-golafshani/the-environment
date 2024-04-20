@@ -6,9 +6,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="https://kit.fontawesome.com/7af5019731.js" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head> -->
-    <!-- <link rel="icon" href="favicon.ico"> -->
-    <title>داشبورد | <%=settings.title%> </title>
+
+    <%if(setting){%>
+    <title>داشبورد | <%= setting.title%> </title>
+    <%} else if(setting == null){%>
+      <title>داشبورد | </title>
+
+      <%}%>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="/dashboard/css/simplebar.css">
     <!-- Fonts CSS -->
@@ -28,7 +32,18 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="/dashboard/css/app-light.css" id="lightTheme"> 
     <link rel="stylesheet" href="/dashboard/css/app-dark.css" id="darkTheme" disabled>
-    
+
+    <!-- sweetAlert2 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- ویرایشگر -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+    <%-style%>
 
   </head>
   <body class="vertical  light rtl">
@@ -42,6 +57,28 @@
       
       
     </div>
+   <!-- ویراشگر -->
+   <script>
+    ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+              language: {
+                ui: 'en',
+                content: "fa"
+              },
+              image: {
+                toolbar: [ 'toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit' ]
+              }
+            } )
+            .then( editor => {
+                    console.log( editor );
+            } )
+            .catch( error => {
+                    console.error( error );
+            } );
+   </script>
+   <!-- sweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+
     <script src="/dashboard/js/jquery.min.js"></script>
     <script src="/dashboard/js/popper.min.js"></script>
     <script src="/dashboard/js/moment.min.js"></script>
@@ -163,9 +200,7 @@
         },
         placeholder: "___.___.___.___"
       });
-      // editor
-      let editor = document.getElementById('editor');
-      if (editor)
+    
       {
         let toolbarOptions = [
           [
@@ -368,7 +403,7 @@
     });
   </script>
 
-
+<%-script%>
   
 
 </body>

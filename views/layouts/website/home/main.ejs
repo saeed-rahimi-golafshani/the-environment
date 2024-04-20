@@ -1,56 +1,73 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
+   
 
 <head>
-    <meta charset="utf-8">
-    <title>NewsBit - News Magazine Newspaper HTML Template</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" href="website/images/favicon.png">
+      <%if(setting){%> 
+        <title><%= setting.title%></title>
+        <%} else if(setting == null){%> 
+            <title>وب سایت اکو سیستم</title>
+            <%}%>
+
+      <script src="https://kit.fontawesome.com/7af5019731.js" crossorigin="anonymous"></script>
+      
+      <!-- CSS FILES START -->
+      <link href="website/css/custom.css" rel="stylesheet">
+      <link href="website/css/color.css" rel="stylesheet">
+      <link href="website/css/responsive.css" rel="stylesheet">
+      <link href="website/css/owl.carousel.min.css" rel="stylesheet">
+      <link href="website/css/bootstrap.min.css" rel="stylesheet">
+      <link href="website/css/prettyPhoto.css" rel="stylesheet">
+      <link href="website/css/all.min.css" rel="stylesheet">
+      <!-- CSS FILES End -->
+   </head>
   
-    <!-- theme meta -->
-    <meta name="theme-name" content="newsbit" />
+   <body>
+      <div class="wrapper home1">
+         
+         <!--Header Start-->
+         <%-include("./headers.ejs")%>
+         <!--Header End-->
 
-    <!--Favicon-->
-    <link rel="shortcut icon" href="website/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="website/images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="website/images/apple-touch-icon.png">
-    
-    <!-- THEME CSS
-	================================================== -->
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="website/plugins/bootstrap/css/bootstrap.min.css">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="website/plugins/font-awesome/css/font-awesome.min.css">
-    <!-- Slick Carousel -->
-    <link rel="stylesheet" href="website/plugins/slick-carousel/slick.css">
-    <link rel="stylesheet" href="website/plugins/slick-carousel/slick-theme.css">
-    <!-- manin stylesheet -->
-    <link rel="stylesheet" href="website/css/style.css">
-</head>
-<body>
+          <!--slider Start-->
+          <%-include("./slider.ejs")%>
+          <!--slider End-->
+         
+         <%-body%>
+         
+         <!--Footer Start-->
+         <%-include("./footer.ejs")%>
+         <!--Footer End--> 
+         <nav class="sidenav">
+            <ul class="main">
+               <li><a href="index-2.html">Home</a></li>
+               <li><a href="about.html">About Us</a></li>
+               <li><a href="events-grid.html">Events</a></li>
+               <li><a href="causes.html">Causes</a></li>
+               <li><a href="projects-grid.html">Projects</a></li>
+               <li><a href="blog.html">Blog</a></li>
+               <li><a href="shop-two.html">Shop</a></li>
+               <li><a href="contact-one.html">Contact</a></li>
+            </ul>
+         </nav>
+         <div class="overlay"></div>
+      </div>
+      <!--   JS Files Start  --> 
+      <script src="website/js/jquery-3.3.1.min.js"></script> 
+      <script src="website/js/jquery-migrate-1.4.1.min.js"></script> 
+      <script src="website/js/popper.min.js"></script> 
+      <script src="website/js/bootstrap.min.js"></script> 
+      <script src="website/js/owl.carousel.min.js"></script> 
+      <script src="website/js/jquery.prettyPhoto.js"></script> 
+      <script src="website/js/isotope.min.js"></script> 
+      <script src="website/js/custom.js"></script>
+   </body>
 
-<%-include("./headers.ejs")%>
-
-<%-body%>
-
-<div class="py-40"></div>
-
-<%-include("./footer.ejs")%>
-
-<!-- THEME JAVASCRIPT FILES
-================================================== -->
-<!-- initialize jQuery Library -->
-<script src="website/plugins/jquery/jquery.js"></script>
-<!-- Bootstrap jQuery -->
-<script src="website/plugins/bootstrap/js/bootstrap.min.js"></script>
-<!-- Slick Slider -->
-<script src="website/plugins/slick-carousel/slick.min.js"></script>
-<!-- Google Map -->
-<script src="website/https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-<script src="website/plugins/google-map/gmap.js"></script>
-<!-- main js -->
-<script src="website/js/custom.js"></script>
-
-</body>
 </html>
+
+

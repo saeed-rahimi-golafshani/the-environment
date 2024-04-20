@@ -1,29 +1,140 @@
-<footer class="footer footer-main ">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-sm-12 col-lg-6 text-center">
-                <a href="index.html"><img src="website/images/logos/footer-logo.png" alt="" class="img-fluid"></a>
-                <p class="mt-4">We perfectly balances the simplicity of a clean, eye-catching blog with the flexibility to create unique page layouts.</p>
-
-                <ul class="list-inline footer-social">
-                    <li class="li list-inline-item"><a href="https://www.facebook.com/themefisher"><i class="fa fa-facebook"></i></a></li>
-                    <li class="li list-inline-item"><a href="https://twitter.com/themefisher"><i class="fa fa-twitter"></i></a></li>
-                    <li class="li list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                    <li class="li list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                    <li class="li list-inline-item"><a href="#"><i class="fa fa-rss"></i></a></li>
-                    <li class="li list-inline-item"><a href="#"><i class="fa fa-youtube"></i></a></li>
-                </ul>
-
-                <div class="copyright-text text-center">
-                    <p class="mb-0">© All Copyright Reserved to - <a href="https://themefisher.com/" target="_blank">Themefisher</a></p>
+<%if(setting){%> 
+<footer class="footer-style-2">
+    <div class="footer-top wf100">
+       <div class="container">
+          <div class="row">
+             <div class="col-lg-3 col-sm-6">
+                <!--Footer Widget Start-->
+                <div class="footer-widget about-ecova">
+                   <div class="f2logo"> <img src="<%= setting.file.coverImageUrl%>" width="50%" alt="site_logo"> </div>
+                   <p><%= getTwoLine%></p>
+                   <a href="/about" class="more">بیشتر درباره اکو سیستم بدانید</a> 
                 </div>
-            </div>
+                <!--Footer Widget End--> 
+             </div>
+             <div class="col-lg-3 col-sm-6">
+                <!--Footer Widget Start-->
+                <div class="footer-widget">
+                   <h5><%= setting.title_first_footer%></h5>
+                   <ul class="quick-links">
+                      <li> <a href="#">Waste Management</a></li>
+                      <li><a href="#">Solar Energy</a></li>
+                      <li><a href="#">Eco Ideas</a></li>
+                      <li><a href="#">Recycling Materials</a></li>
+                      <li><a href="#">Plant Ecology</a></li>
+                      <li><a href="#">Saving Wildlife </a></li>
+                   </ul>
+                </div>
+                <!--Footer Widget End--> 
+             </div>
+             <div class="col-lg-3 col-sm-6">
+                <!--Footer Widget Start-->
+            
+                <div class="footer-widget">
+                   <h5><%= setting.title_second_footer%></h5>
+                   <ul class="ftags">
+                     <%setting.tags.forEach(item => {%> 
+                        <li><a href="#"><%= item%></a></li>
+                        <%})%>
+                      
+                      <!-- <li><a href="#">Plant Ecology</a></li>
+                      <li><a href="#">Wildlife</a></li>
+                      <li><a href="#">Eco Ideas</a></li>
+                      <li><a href="#">Waste Management</a></li>
+                      <li><a href="#">Water</a></li>
+                      <li><a href="#">Forest Planting</a></li>
+                      <li><a href="#">Donation</a></li>
+                      <li><a href="#">Wind Energy</a></li>
+                      <li><a href="#">Recycling</a></li> -->
+                   </ul>
+                </div>
+                <!--Footer Widget End--> 
+             </div>
+             <div class="col-lg-3 col-sm-6">
+                <!--Footer Widget Start-->
+                <div class="footer-widget">
+                   <h5><%= setting.title_third_footer%></h5>
+                   <ul class="lastest-products">
+                      <li> <img src="images/flp1.jpg" alt=""> <strong><a href="#">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span> </li>
+                      <li> <img src="images/flp2.jpg" alt=""> <strong><a href="#">Eliminate your plastic bottle pollution & keep...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span> </li>
+                      <li> <img src="images/flp3.jpg" alt=""> <strong><a href="#">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span> </li>
+                   </ul>
+                </div>
+                <!--Footer Widget End--> 
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="footer-newsletter wf100">
+       <div class="container">
+          <div class="row">
+             
+             <div class="col-lg-5">
+                <div class="footer-social">
+                   <strong><%= setting.title_fourth_menu%></strong> 
+                   <a href="#">
+                     <i class="fab fa-facebook-f"></i>
+                  </a> 
+                  <a href="#">
+                     <i class="fab fa-twitter"></i>
+                  </a> 
+                  <a href="#">
+                     <i class="fab fa-linkedin-in"></i>
+                  </a> 
+                  <a href="#">
+                     <i class="fab fa-google-plus-g"></i>
+                  </a> 
+                  <a href="#">
+                     <i class="fab fa-instagram"></i>
+                  </a> 
+                  <a href="#">
+                     <i class="fab fa-youtube"></i>
+                  </a> 
+               </div>
+             </div>
 
-            <div class="scroll-to-top">
-                <button class="btn btn-primary" title="Back to Top">
-                    <i class="fa fa-angle-up"></i>
-                </button>
+             <div class="col-lg-7">
+               <div class="newsletter">
+                  <strong>ارسال خبر نامه</strong>
+                  <ul>
+                     <li>
+                        <input  type="text" placeholder=" ...نام و نام خانوادگی">
+                     </li>
+                     <li>
+                        <input  type="text" placeholder="...موبایل">
+                     </li>
+                     <li>
+                        <input  type="submit" value="عضویت">
+                     </li>
+                  </ul>
+               </div>
             </div>
-        </div>
+          </div>
+       </div>
+    </div>
+    <div class="footer-copyr wf100">
+       <div class="container">
+          <div class="row">
+             <div class="col-md-8 col-sm-8">
+                <p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+             </div>
+          </div>
+       </div>
     </div>
 </footer>
+<%} else if(setting == null){%>
+   <footer class="footer-style-2">
+      <div class="footer-top wf100">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-3 col-sm-6">
+                  <!--Footer Widget Start-->
+                  <div class="footer-widget about-ecova">
+                     <div class="f2logo"> <img src="" width="50%" alt="site_logo"> </div>
+                     <p>لطفا تنظیمات را بررسی کنید</p>
+                     <a href="/about" class="more">بیشتر درباره اکو سیستم بدانید</a> 
+                  </div>
+                  <!--Footer Widget End--> 
+               </div>
+  </footer>
+   <%}%>

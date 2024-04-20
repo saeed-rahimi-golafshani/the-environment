@@ -1,0 +1,474 @@
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+
+        <div class="card shadow mb-4">
+          <div class="card-header">
+            <strong class="card-title">تنظیمات سایت</strong>
+          </div>
+          <div class="card-body">
+            <%if(setting){%>
+              <form id="frm_add_settings">
+
+                <div class="row">
+                  <div class="col-md-6">
+
+
+                    <div class="form-group mb-3">
+                      <label for="image" style="font-size: 0.9rem;">بارگزاری لوگوی سایت </label>
+                      <input type="file" id="image" name="image" accept="image/*" placeholder=""
+                        class="form-control-file border" style="background-color: rgb(243, 243, 243);">
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="site_icon" style="font-size: 0.9rem;">بارگزاری آیکون سایت (<a
+                          href="https://fontawesome.com/search/" target="_blank"
+                          style="color: rgb(247, 130, 130); text-decoration: none;"> فهرست آیکون ها</a>)</label>
+                      <%if(setting.site_icon){%>
+                        <input type="text" id="site_icon" name="site_icon" placeholder="<%= setting.site_icon%>"
+                          onchange="trimFontAwesomeAddress(this)" onkeyup="trimFontAwesomeAddress(this)"
+                          class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" id="site_icon" name="site_icon" placeholder=""
+                            onchange="trimFontAwesomeAddress(this)" onkeyup="trimFontAwesomeAddress(this)"
+                            class="form-control" style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title" style="font-size: 0.9rem;">عنوان سایت</label>
+                      <%if(setting.title){%>
+                        <input type="text" name="title" id="title" placeholder="<%= setting.title%>"
+                          class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title" id="title" placeholder="" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title_next_to_Logo" style="font-size: 0.9rem;">نمایش عنوان کنار لگوی سایت</label>
+                      <%if(setting.title_next_to_Logo==true){%>
+                        <div class="col-sm-3">
+                          <select name="title_next_to_Logo" id="title_next_to_Logo"
+                            style="background-color: rgb(231, 216, 4);" class="form-control">
+                            <option selected value="true">فعال</option>
+                            <option value="false">غیر فعال</option>
+                          </select>
+                        </div>
+                        <%} else if(setting.title_next_to_Logo==false){%>
+                          <div class="col-sm-3">
+                            <select name="title_next_to_Logo" id="title_next_to_Logo"
+                              style="background-color: rgb(231, 216, 4);" class="form-control">
+                              <option value="true">فعال</option>
+                              <option selected value="false">غیر فعال</option>
+                            </select>
+                          </div>
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label style="font-size: 0.9rem;" for="description">توضیحات سایت</label>
+                      <div class="col-sm-12">
+                        <%if(setting.description){%>
+                          <textarea name="description" placeholder="<%= setting.description%>" id="editor" rows="10"
+                            cols="80"></textarea>
+                          <%} else{%>
+                            <textarea name="description" placeholder="" id="editor" rows="10" cols="80"></textarea>
+                            <%}%>
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label style="font-size: 0.9rem;" for="tags">برچسب ها (با - جدا شود)</label>
+                      <div class="col-sm-12">
+                        <%if(setting.tags){%>
+                          <textarea name="tags" id="tags" placeholder="<%= setting.tags%>" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" rows="6"></textarea>
+                          <%} else{%>
+                            <textarea name="tags" id="tags" class="form-control"
+                              style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" rows="6"></textarea>
+                            <%}%>
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title_mega_menu" style="font-size: 0.9rem;">عنوان مگا منو</label>
+                      <%if(setting.title_mega_menu){%>
+                        <input type="text" name="title_mega_menu" placeholder="<%= setting.title_mega_menu%>"
+                          id="title_mega_menu" class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title_mega_menu" id="title_mega_menu" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <!-- <div class="form-group mb-3">
+                    <label for="mega_menu_icon" style="font-size: 0.9rem;">آیکون مگا منو  (<a href="https://fontawesome.com/search/" target="_blank" style="color: rgb(247, 130, 130); text-decoration: none;" > فهرست آیکون ها</a>)</label>
+                    <%if(setting.mega_menu_icon){%>
+                      <input type="text" name="mega_menu_icon" id="mega_menu_icon" placeholder="<%= setting.mega_menu_icon%>"  
+                      onchange="trimFontAwesomeAddress(this)" 
+                      onkeyup="trimFontAwesomeAddress(this)" 
+                      class="form-control" style="background-color: rgb(243, 243, 243);">
+                      <%} else{%> 
+                      <input type="text" id="mega_menu_icon" name="mega_menu_icon" 
+                      onchange="trimFontAwesomeAddress(this)" 
+                      onkeyup="trimFontAwesomeAddress(this)" 
+                      class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%}%>
+                  </div> -->
+
+                    <div class="form-group mb-3">
+                      <label for="title_first_footer" style="font-size: 0.9rem;">عنوان فوتر اول</label>
+                      <%if(setting.title_first_footer){%>
+                        <input type="text" name="title_first_footer" id="title_first_footer"
+                          placeholder="<%= setting.title_first_footer%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title_first_footer" id="title_first_footer" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title_second_footer" style="font-size: 0.9rem;">عنوان فوتر دوم</label>
+                      <%if(setting.title_second_footer){%>
+                        <input type="text" name="title_second_footer" id="title_second_footer"
+                          placeholder="<%= setting.title_second_footer%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title_second_footer" id="title_second_footer" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title_third_footer" style="font-size: 0.9rem;">عنوان فوتر سوم</label>
+                      <%if(setting.title_third_footer){%>
+                        <input type="text" name="title_third_footer" id="title_third_footer"
+                          placeholder="<%= setting.title_third_footer%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title_third_footer" id="title_third_footer" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="title_fourth_menu" style="font-size: 0.9rem;">عنوان فوتر چهارم</label>
+                      <%if(setting.title_fourth_menu){%>
+                        <input type="text" name="title_fourth_menu" id="title_fourth_menu"
+                          placeholder="<%= setting.title_fourth_menu%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="title_fourth_menu" id="title_fourth_menu" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="phone_number" style="font-size: 0.9rem;">شماره تماس</label>
+                      <%if(setting.phone_number){%>
+                        <input type="text" name="phone_number" id="phone_number"
+                          placeholder="<%= setting.phone_number%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="phone_number" id="phone_number" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="email" style="font-size: 0.9rem;">ایمیل</label>
+                      <%if(setting.email){%>
+                        <input type="text" name="email" id="email" placeholder="<%= setting.email%>"
+                          class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="email" id="email" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="android_link" style="font-size: 0.9rem;">لینک اندروید</label>
+                      <%if(setting.android_link){%>
+                        <input type="text" name="android_link" id="android_link"
+                          placeholder="<%= setting.android_link%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="android_link" id="android_link" placeholder="" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="ios_link" style="font-size: 0.9rem;">لینک آی او اس</label>
+                      <%if(setting.ios_link){%>
+                        <input type="text" name="ios_link" id="ios_link" placeholder="<%= setting.ios_link%>"
+                          class="form-control" style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="ios_link" id="ios_link" placeholder="" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="slider_delay" style="font-size: 0.9rem;">تاخیر اسلایدر(ثانیه)</label>
+                      <%if(setting.slider_delay){%>
+                        <input type="text" name="slider_delay" id="slider_delay"
+                          placeholder="<%= setting.slider_delay%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="slider_delay" id="slider_delay" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="launching_status" style="font-size: 0.9rem;">نمایش وضعیت در حال راه اندازی</label>
+                      <div class="col-sm-3">
+                        <%if(setting.launching_status==true){%>
+                          <select name="launching_status" id="launching_status"
+                            style="background-color: rgb(231, 216, 4);" class="form-control">
+                            <option selected value="true">فعال</option>
+                            <option value="false">غیر فعال</option>
+                          </select>
+                          <%} else if(setting.launching_status==false){%>
+                            <select name="launching_status" id="launching_status"
+                              style="background-color: rgb(231, 216, 4);" class="form-control">
+                              <option value="true">فعال</option>
+                              <option selected value="false">غیر فعال</option>
+                            </select>
+                            <%}%>
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="launching_title" style="font-size: 0.9rem;">عنوان در حال راه اندازی</label>
+                      <%if(setting.launching_title){%>
+                        <input type="text" name="launching_title" id="launching_title"
+                          placeholder="<%= setting.launching_title%>" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                        <%} else{%>
+                          <input type="text" name="launching_title" id="launching_title" class="form-control"
+                            style="background-color: rgb(243, 243, 243);">
+                          <%}%>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label style="font-size: 0.9rem;" for="launching_description">توضیحات در حال راه اندازی</label>
+                      <div class="col-sm-12">
+                        <%if(setting.launching_description){%>
+                          <textarea name="launching_description" id="launching_description"
+                            placeholder="<%= setting.launching_description%>" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" rows="6"></textarea>
+                          <%} else{%>
+                            <textarea name="launching_description" id="launching_description" placeholder=""
+                              class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                              rows="6"></textarea>
+                            <%}%>
+                      </div>
+                    </div>
+                    <div class="form-group mb-2">
+                      <button onclick="doUpdateSettings('<%= setting._id%>')" id="call-detail" class='btn btn-primary'
+                        style='padding: 5px 20px; font-size: 0.85rem;'>به روز رسانی اطلاعات</button>
+                    </div>
+
+                  </div> <!-- /.col -->
+                </div>
+
+              </form>
+              <%} else{%>
+                <form id="frm_add_settings">
+
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <div class="form-group mb-3">
+                        <label for="image" style="font-size: 0.9rem;">بارگزاری لوگوی سایت </label>
+                        <input type="file" id="image" name="image" accept="image/*" placeholder=""
+                          class="form-control-file border" style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="site_icon" style="font-size: 0.9rem;">بارگزاری آیکون سایت (<a
+                            href="https://fontawesome.com/search/" target="_blank"
+                            style="color: rgb(247, 130, 130); text-decoration: none;"> فهرست آیکون ها</a>)</label>
+                        <input type="text" id="site_icon" name="site_icon" placeholder=""
+                          onchange="trimFontAwesomeAddress(this)" onkeyup="trimFontAwesomeAddress(this)"
+                          class="form-control" style="background-color: rgb(243, 243, 243);">
+
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title" style="font-size: 0.9rem;">عنوان سایت</label>
+                        <input type="text" name="title" id="title" placeholder="" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title_next_to_Logo" style="font-size: 0.9rem;">نمایش عنوان کنار لگوی سایت</label>
+                        <div class="col-sm-3">
+                          <select name="title_next_to_Logo" id="title_next_to_Logo"
+                            style="background-color: rgb(231, 216, 4);" class="form-control">
+                            <option value="true">فعال</option>
+                            <option selected value="false">غیر فعال</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label style="font-size: 0.9rem;" for="description">توضیحات سایت</label>
+                        <div class="col-sm-12">
+                          <textarea name="description" placeholder="" id="editor" rows="10" cols="80"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label style="font-size: 0.9rem;" for="tags">برچسب ها (با - جدا شود)</label>
+                        <div class="col-sm-12">
+                          <textarea name="tags" id="tags" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" rows="6"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title_mega_menu" style="font-size: 0.9rem;">عنوان مگا منو</label>
+                        <input type="text" name="title_mega_menu" id="title_mega_menu" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <!-- <div class="form-group mb-3">
+                        <label for="mega_menu_icon" style="font-size: 0.9rem;">آیکون مگا منو  (<a href="https://fontawesome.com/search/" target="_blank" style="color: rgb(247, 130, 130); text-decoration: none;" > فهرست آیکون ها</a>)</label>
+                          <input type="text" id="mega_menu_icon" name="mega_menu_icon" 
+                          onchange="trimFontAwesomeAddress(this)" 
+                          onkeyup="trimFontAwesomeAddress(this)" class="form-control" style="background-color: rgb(243, 243, 243);">
+                      </div> -->
+
+                      <div class="form-group mb-3">
+                        <label for="title_first_footer" style="font-size: 0.9rem;">عنوان فوتر اول</label>
+                        <input type="text" name="title_first_footer" id="title_first_footer" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title_second_footer" style="font-size: 0.9rem;">عنوان فوتر دوم</label>
+                        <input type="text" name="title_second_footer" id="title_second_footer" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title_third_footer" style="font-size: 0.9rem;">عنوان فوتر سوم</label>
+                        <input type="text" name="title_third_footer" id="title_third_footer" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="title_fourth_menu" style="font-size: 0.9rem;">عنوان فوتر چهارم</label>
+                        <input type="text" name="title_fourth_menu" id="title_fourth_menu" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="phone_number" style="font-size: 0.9rem;">شماره تماس</label>
+                        <input type="text" name="phone_number" id="phone_number" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="email" style="font-size: 0.9rem;">ایمیل</label>
+                        <input type="text" name="email" id="email" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="android_link" style="font-size: 0.9rem;">لینک اندروید</label>
+                        <input type="text" name="android_link" id="android_link" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="ios_link" style="font-size: 0.9rem;">لینک آی او اس</label>
+                        <input type="text" name="ios_link" id="ios_link" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="slider_delay" style="font-size: 0.9rem;">تاخیر اسلایدر(ثانیه)</label>
+                        <input type="text" name="slider_delay" id="slider_delay" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="launching_status" style="font-size: 0.9rem;">نمایش وضعیت در حال راه اندازی</label>
+                        <div class="col-sm-3">
+                          <select name="launching_status" id="launching_status"
+                            style="background-color: rgb(231, 216, 4);" class="form-control">
+                            <option value="true">فعال</option>
+                            <option selected value="false">غیر فعال</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="launching_title" style="font-size: 0.9rem;">عنوان در حال راه اندازی</label>
+                        <input type="text" name="launching_title" id="launching_title" class="form-control"
+                          style="background-color: rgb(243, 243, 243);">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label style="font-size: 0.9rem;" for="launching_description">توضیحات در حال راه اندازی</label>
+                        <div class="col-sm-12">
+                          <textarea name="launching_description" id="launching_description" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" rows="6"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-2">
+                        <button onclick="doSaveSettings()" id="call-detail" class='btn btn-primary'
+                          style='padding: 5px 20px; font-size: 0.85rem;'>ثبت اطلاعات</button>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </form>
+                <%}%>
+
+                  <%if(messages){%>
+                    <div class="alert">
+                      <strong style="color: rgb(51, 141, 56);">
+                        <%= messages?? "" %>
+                      </strong>
+                    </div>
+                    <%}%>
+                      <%if(errors){%>
+
+                        <div class="alert">
+                          <strong style="color: rgb(245, 39, 108);">
+                            <%= errors?? "" %>
+                          </strong>
+                        </div>
+                        <%}%>
+          </div>
+        </div> <!-- / .card -->
+      </div> <!-- .col-12 -->
+    </div> <!-- .row -->
+  </div> <!-- .container-fluid -->
+</main> <!-- main -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    window.setTimeout(function () {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+        $(this).remove();
+      });
+    }, 2000);
+
+  });
+</script>

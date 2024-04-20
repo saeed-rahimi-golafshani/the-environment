@@ -5,15 +5,22 @@
     <nav class="vertnav navbar navbar-light">
       <!-- nav bar -->
       <div class="w-100 mb-4 d-flex">
-        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="/">
-          <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" >
-           <img src="/uploads/static_file/logo/download.png" width="80px" height="80px">
-          </svg>
-        </a>
+        <% if(setting == null){%> 
+          <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="/">
+              Image Logo
+            
+          </a>
+          <%} else if(setting){%> 
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="/">
+              <img src="<%= setting.file.coverImageUrl%>" class="w-75" alt="image_logo">               
+            
+            </a>
+          <%}%>
+       
       </div>
       <ul class="navbar-nav flex-fill w-100 mb-2">
         <li class="nav-item w-100">
-          <a class="nav-link" href="/panel/">
+          <a class="nav-link" href="/dashboard">
             <i class="fas fa-home fe-16"></i>
             <span class="ml-3 item-text">داشبورد</span>
             <!-- <span class="badge badge-pill badge-primary">New</span> -->
@@ -32,11 +39,81 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#news" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fab fa-figma fe-16"></i>
             <span class="ml-3 item-text">ثبت خبر</span>
           </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="news">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/dashboard/news_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی خبر</span></a>
+            </li>            
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#project" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fab fa-figma fe-16"></i>
+            <span class="ml-3 item-text">ثبت پروژه</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="project">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/dashboard/news_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی خبر</span></a>
+            </li>            
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#gallery" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fab fa-figma fe-16"></i>
+            <span class="ml-3 item-text">ثبت گالری</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="gallery">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/dashboard/news_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی خبر</span></a>
+            </li>            
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fab fa-figma fe-16"></i>
+            <span class="ml-3 item-text">ثبت تقویم</span>
+          </a>
           <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/dashboard/news_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی خبر</span></a>
+            </li>            
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#event" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fab fa-figma fe-16"></i>
+            <span class="ml-3 item-text">ثبت رویدادها</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="event">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="/dashboard/news_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی خبر</span></a>
+            </li>            
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#organse" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fab fa-figma fe-16"></i>
+            <span class="ml-3 item-text">ثبت سازمانها</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="organse">
             <li class="nav-item">
               <a class="nav-link pl-3" href="/panel/product" style="font-size: 0.8rem;"><span class="ml-1 item-text">خبر</span></a>
             </li>
@@ -54,11 +131,11 @@
         </li> -->
         
         <li class="nav-item dropdown">
-          <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="	fa fa-pie-chart fe-16"></i>
             <span class="ml-3 item-text">گزارشات</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+          <ul class="collapse list-unstyled pl-4 w-100" id="report">
             <li class="nav-item">
               <a class="nav-link pl-3" href="./table_basic.html" style="font-size: 0.8rem;"><span class="ml-1 item-text">گزارشات مالی</span></a>
             </li>
@@ -68,16 +145,16 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#blog" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fas fa-blog fe-16"></i>
             <span class="ml-3 item-text">بلاگ</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+          <ul class="collapse list-unstyled pl-4 w-100" id="blog">
             <li class="nav-item">
-              <a class="nav-link pl-3" href="/panel/blog" style="font-size: 0.8rem;"><span class="ml-1 item-text">بلاگ</span></a>
+              <a class="nav-link pl-3" href="/dashboard/blog" style="font-size: 0.8rem;"><span class="ml-1 item-text">بلاگ</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link pl-3" href="/panel/blog_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی بلاگ</span></a>
+              <a class="nav-link pl-3" href="/dashboard/blog_category" style="font-size: 0.8rem;"><span class="ml-1 item-text">دسته بندی بلاگ</span></a>
             </li>
           </ul>
         </li>
@@ -93,11 +170,11 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#question" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fas fa-question-circle fe-16"></i>
             <span class="ml-3 item-text">پرسش های متداول</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+          <ul class="collapse list-unstyled pl-4 w-100" id="question">
             <a class="nav-link pl-3" href="./contacts-list.html" style="font-size: 0.8rem;"><span class="ml-1">پرسش های متداول</span></a>
             <a class="nav-link pl-3" href="./contacts-grid.html" style="font-size: 0.8rem;"><span class="ml-1">دسته بندی پرسش ها</span></a>
           </ul>
@@ -121,33 +198,33 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#operator" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fas fa-user-tie fe-16"></i>
             <span class="ml-3 item-text">اپراتورها</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+          <ul class="collapse list-unstyled pl-4 w-100" id="operator">
             <a class="nav-link pl-3" href="./contacts-list.html" style="font-size: 0.8rem;"><span class="ml-1">اپراتور ها</span></a>
             <a class="nav-link pl-3" href="./contacts-grid.html" style="font-size: 0.8rem;"><span class="ml-1">واحد های پشتیبانی</span></a>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#public_setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fa fa-sliders fe-16"></i>
             <span class="ml-3 item-text">تنظیمات عمومی</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-            <a class="nav-link pl-3" href="/panel/settings" style="font-size: 0.8rem;"><span class="ml-1">تنظیمات</span></a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="public_setting">
+            <a class="nav-link pl-3" href="/dashboard/setting" style="font-size: 0.8rem;"><span class="ml-1">تنظیمات</span></a>
             <a class="nav-link pl-3" href="/panel/services" style="font-size: 0.8rem;"><span class="ml-1">خدمات</span></a>
             <a class="nav-link pl-3" href="/panel/slider" style="font-size: 0.8rem;"><span class="ml-1">اسلایدر</span></a>
             <a class="nav-link pl-3" href="/panel/menu" style="font-size: 0.8rem;"><span class="ml-1">منو</span></a>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+          <a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fas fa-house-user fe-16"></i>
             <span class="ml-3 item-text">تنظیمات اصلی</span>
           </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+          <ul class="collapse list-unstyled pl-4 w-100" id="setting">
             <a class="nav-link pl-3" href="./contacts-list.html" style="font-size: 0.8rem;"><span class="ml-1">تنظیمات اصلی</span></a>
             <a class="nav-link pl-3" href="./contacts-grid.html" style="font-size: 0.8rem;"><span class="ml-1">هزینه ارسال</span></a>
           </ul>

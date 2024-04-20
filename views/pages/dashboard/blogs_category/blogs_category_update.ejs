@@ -1,0 +1,177 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <strong class="card-title">ویرایش دسته بندی بلاگ</strong>
+                        <a href="/dashboard/blog_category/"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-sign-out" style="margin: 5px;"></i>
+                            بازگشت</a>
+                        <a href="/dashboard/blog_category/add"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-add" style="margin: 5px;"></i>
+                            افزودن</a>
+                    </div>
+                    <div class="card-body">
+                        <form id="frm_updateBlogCategory">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group mb-3">
+                                        <label for="title" style="font-size: 0.9rem;">عنوان</label>
+                                        <%if(blogCategory.title) {%>
+                                            <input type="text" name="title" id="title" class="form-control"
+                                                style="background-color: rgb(243, 243, 243);"
+                                                placeholder="<%=blogCategory.title%>">
+                                            <%} else {%>
+                                                <input type="text" name="title" id="title" class="form-control"
+                                                    style="background-color: rgb(243, 243, 243);" placeholder="">
+                                                <%}%>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="slug" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                                        <%if(blogCategory.slug){%>
+                                            <input type="text" id="slug" name="slug" class="form-control"
+                                                style="background-color: rgb(243, 243, 243);"
+                                                placeholder="<%=blogCategory.slug%>">
+                                            <%} else{%>
+                                                <input type="text" id="slug" name="slug" class="form-control"
+                                                    style="background-color: rgb(243, 243, 243);" placeholder="">
+                                                <%}%>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="show_in_archive" style="font-size: 0.9rem;">نمایش در
+                                            آرشیو</label>
+                                        <%if(blogCategory.show_in_archive==true){%>
+                                            <select name="show_in_archive" style="background-color: rgb(243, 243, 243);"
+                                                id="show_in_archive" class="form-control">
+                                                <option selected value="true">فعال</option>
+                                                <option value="false">غیر فعال</option>
+                                            </select>
+                                            <%} else if(blogCategory.show_in_archive==false){%>
+                                                <select name="show_in_archive"
+                                                    style="background-color: rgb(243, 243, 243);"
+                                                    id="show_in_archive" class="form-control">
+                                                    <option value="true">فعال</option>
+                                                    <option selected value="false">غیر فعال</option>
+                                                </select>
+                                                <%}%>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="priorityinput" style="font-size: 0.9rem;">دسته بندی پیش فرض</label>
+                                        <%if(blogCategory.priority==true){%>
+                                            <select name="priority" style="background-color: rgb(243, 243, 243);"
+                                                id="priorityinput" class="form-control">
+                                                <option selected value="true">فعال</option>
+                                                <option value="false">غیر فعال</option>
+                                            </select>
+                                            <%} else if(blogCategory.priority==false){%>
+                                                <select name="priority" style="background-color: rgb(243, 243, 243);"
+                                                    id="priorityinput" class="form-control">
+                                                    <option value="true">فعال</option>
+                                                    <option selected value="false">غیر فعال</option>
+                                                </select>
+                                                <%}%>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="iconinput" style="font-size: 0.9rem;">آیکون در فونت آسام(<a
+                                                href="https://fontawesome.com/search/" target="_blank"
+                                                style="color: rgb(247, 130, 130); text-decoration: none;"> فهرست آیکون
+                                                ها</a>)</label>
+                                        <%if(blogCategory.icon){%>
+                                            <input type="text" id="iconinput" name="icon" class="form-control"
+                                                style="background-color: rgb(243, 243, 243);"
+                                                placeholder="<%=blogCategory.icon%>">
+
+                                            <%} else {%>
+                                                <input type="text" id="iconinput" name="icon" class="form-control"
+                                                    style="background-color: rgb(243, 243, 243);" placeholder="">
+
+                                                <%}%>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="parent" style="font-size: 0.9rem;">دسته بندی والد</label>
+                                        <div class="col-sm-4">
+                                            <select name="parent"
+                                                style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
+                                                class="form-control select2" id="parent">
+                                                <%if(blogCategory.parent){%>
+                                                    <option value="">
+                                                        <%=blogCategory.parent.title%>
+                                                    </option>
+                                                     
+                                                    <%} else{%>
+                                                        <option value="6589d430053a84a4ed2d9829">نامشخص</option>
+                                                        <%}%>
+                                                            <optgroup>
+                                                                <option value="6589d430053a84a4ed2d9829">نامشخص</option>
+                                                                <%getParentBlogCategory.forEach(item=> {%>
+                                                                    <option value="<%=item._id%>">
+                                                                        <%=item.title%>
+                                                                    </option>
+
+                                                                    <%})%>
+                                                            </optgroup>
+                                            </select>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <button onclick="updateBlogCategory('<%= blogCategory.code%>')"
+                                            class="btn btn-primary"
+                                            style="padding: 5px 20px; font-size: 0.85rem;">ویرایش اطلاعات</button>
+                                    </div>
+
+                                </div> <!-- /.col -->
+                            </div>
+                        </form>
+
+                        <%if(messages){%>
+                            <div class="alert">
+                                <strong style="color: rgb(51, 141, 56);">
+                                    
+                                    <%= messages?? "" %>
+                                </strong>
+                            </div>
+                            <%}%>
+                                <%if(errors){%>
+
+                                    <div class="alert">
+                                        <strong style="color: rgb(245, 39, 108);">
+                                            <%= errors?? "" %>
+                                        </strong>
+                                    </div>
+                                    <%}%>
+
+
+
+                    </div>
+                </div> <!-- / .card -->
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</main> <!-- main -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        window.setTimeout(function () {
+           
+            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+                $(this).remove();
+            });
+        }, 2000);
+
+    });
+</script>

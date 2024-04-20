@@ -1,0 +1,163 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <strong class="card-title">افزودن بلاگ</strong>
+                        <a href="/dashboard/blog/"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-sign-out" style="margin: 5px;"></i>
+                            بازگشت</a>
+                        <a href="/dashboard/blog/add"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-plus" style="margin: 5px;"></i>
+                            افزودن</a>
+                    </div>
+                    <div class="card-body">
+                        <form id="frm_craeteBlog">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <input type="text" name="code" id="code" value="<%= code%>" hidden>
+
+                                    <div class="form-group mb-3">
+                                        <label for="image" style="font-size: 0.9rem;">انتخاب تصویر</label>
+                                        <input type="file" name="image" id="image"
+                                            class="form-control-file border">
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="blog_type" style="font-size: 0.9rem;">نوع پست</label>
+                                        <select name="blog_type" style="background-color: rgb(243, 243, 243);"
+                                            id="blog_type" class="form-control col-sm-3">
+                                            <option selected value="text">متن</option>
+                                            <option value="podcast">پادکست</option>
+                                            <option value="video">ویدئو</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="title" style="font-size: 0.9rem;">عنوان</label>
+                                        <input type="text" name="title" id="title" class="form-control"
+                                            style="background-color: rgb(243, 243, 243);" required>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="slug" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                                        <input type="text" id="slug" name="slug" class="form-control"
+                                            style="background-color: rgb(243, 243, 243);" placeholder="" required>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="blog_category_id" style="font-size: 0.9rem;">دسته بندی</label>
+                                        <select name="blog_category_id"
+                                            style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
+                                            class="form-control select2 col-sm-6" id="blog_category_id">
+                                            <%if(blogs.blog_category_id){%>
+                                            <option><%=blogs.blog_category_id.title%></option>
+                                            <%} else{%> 
+                                            <option></option>
+                                            <%}%>
+                                            <optgroup>
+                                                <%blogCategory.forEach(item => {%> 
+                                                <option value="<%=item._id%>""><%=item.title%></option>
+                                                <%})%> 
+                                            </optgroup>
+                                        </select>
+                                        <div class="invalid-feedback"> Please select a valid state. </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label style="font-size: 0.9rem;" for="short_text">متن کوتاه</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="short_text" class="form-control"
+                                                style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                                                id="short_text" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label style="font-size: 0.9rem;" for="text">متن</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="text" class="form-control"
+                                                style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                                                id="text" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label style="font-size: 0.9rem;" for="tags">برچسب ها (با - جدا
+                                            شود)</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="tags" class="form-control"
+                                                style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                                                id="tags" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group mb-3">
+                                        <label for="published_time" style="font-size: 0.9rem;">زمان انتشار</label>
+                                        <div class="col-sm-6">
+                                            <input name="published_time" style="background-color: rgb(243, 243, 243);"
+                                                class="form-control sample-date-picker bg-white w-100 p-3"
+                                                placeholder="" type="text" id="published_time">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="published_status" style="font-size: 0.9rem;">وضعیت انتشار</label>
+                                        <div class="col-sm-3">
+                                            <select name="published_status"
+                                                style="background-color: rgb(243, 243, 243);" id="published_status"
+                                                class="form-control">
+                                                <option selected value="true">فعال</option>
+                                                <option value="false">غیر فعال</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <button onclick="doSaveBlog()" class="btn btn-primary"
+                                            style="padding: 5px 20px; font-size: 0.85rem;">ثبت اطلاعات</button>
+                                    </div>
+
+                                </div> <!-- /.col -->
+                            </div>
+                        </form>
+
+                        <%if(messages){%>
+                            <div class="alert">
+                              <strong style="color: rgb(51, 141, 56);">
+                                <%= messages?? "" %>
+                              </strong>
+                            </div>
+                            <%}%>
+                              <%if(errors){%>
+              
+                                <div class="alert">
+                                  <strong style="color: rgb(245, 39, 108);">
+                                    <%= errors?? "" %>
+                                  </strong>
+                                </div>
+                                <%}%>
+                    </div>
+                </div> <!-- / .card -->
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</main> <!-- main -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+  
+      window.setTimeout(function () {
+        $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+          $(this).remove();
+        });
+      }, 2000);
+  
+    });
+  </script>

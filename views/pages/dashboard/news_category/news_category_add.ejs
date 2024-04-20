@@ -1,111 +1,121 @@
 <main role="main" class="main-content">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          
-          
-          <div class="card shadow mb-4">
-            <div class="card-header">
-                <strong class="card-title">افزودن دسته بندی محصول</strong>
-                <a href="/dashboard/news_category" style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
-                    <i class="fa fa-sign-out" style="margin: 5px;"></i>
-                    بازگشت</a>
-                <a href="/dashboard/news_category/add" style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
-                    <i class="fa fa-plus" style="margin: 5px;"></i>
-                    افزودن</a>
-              </div>
-            <div class="card-body">
-              <form action="/panel/product_category/add" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-md-6">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
 
-                      <div class="form-group mb-3">
-                          <label for="image_input" style="font-size: 0.9rem;">انتخاب تصویر</label>
-                          <input type="file" name="image" id="image_input" class="form-control-file border">
-                      </div>
 
-                      <div class="form-group mb-3">
-                        <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
-                        <input type="text" name="title" id="titleinput" class="form-control" style="background-color: rgb(243, 243, 243);" required>
-                      </div>
+        <div class="card shadow mb-4">
+          <div class="card-header">
+            <strong class="card-title">افزودن دسته بندی محصول</strong>
+            <a href="/dashboard/news_category"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-sign-out" style="margin: 5px;"></i>
+              بازگشت</a>
+            <a href="/dashboard/news_category/add"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-plus" style="margin: 5px;"></i>
+              افزودن</a>
+          </div>
+          <div class="card-body">
+            <form id="frm_add_newsCategory">
+              <div class="row">
+                <div class="col-md-6">
 
-                      <div class="form-group mb-3">
-                        <label for="sluginput" style="font-size: 0.9rem;">عنوان انگلیسی</label>
-                        <input type="text" id="sluginput" name="slug" class="form-control" style="background-color: rgb(243, 243, 243);" placeholder="" required>
-                      </div>
-                      
-                    
-
-                        <div class="form-group mb-3">
-                            <label style="font-size: 0.9rem;" for="description_input">توضیحات</label>
-                            <div class="col-sm-12">
-                              <textarea name="description" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="description_input" rows="6"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label style="font-size: 0.9rem;" for="tags_input">برچسب ها</label>
-                            <div class="col-sm-12">
-                              <textarea name="tags" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input" rows="6"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3 col-sm-6">
-                            <label for="parentinput" style="font-size: 0.9rem;">دسته بندی والد</label>
-                            
-                            <select name="parent" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);" class="form-control select2" id="parentinput">
-                             
-                                <option></option>
-                             
-                                <option value="6589d430053a84a4ed2d9829">نامشخص</option>
-                            
-                              <optgroup>
-                              
-                                  <option value=""></option>  
-                             
-                              </optgroup>
-                            </select>
-                                <div class="invalid-feedback"> Please select a valid state. </div>
-                            
-                            </div>
-                        
-                      <div class="form-group mb-3 col-sm-3">
-                        <label for="showInArchiveinput" style="font-size: 0.9rem;">نمایش در آرشیو</label>
-                          <select name="showInArchive" style="background-color: rgb(243, 243, 243);" id="showInArchiveinput" class="form-control">
-                            <option selected value="true">فعال</option>
-                            <option value="false">غیر فعال</option>                          
-                          </select>
-                      </div>
-
-                      <div class="form-group mb-3 col-sm-3">
-                        <label for="returnedinput" style="font-size: 0.9rem;">دسته بندی قابل مرجوعی</label>
-                          <select name="returned" style="background-color: rgb(243, 243, 243);" id="returnedinput" class="form-control">
-                            <option selected value="true">فعال</option>
-                            <option value="false">غیر فعال</option>                          
-                          </select>
-                      </div>
-
-                      <div class="form-group mb-3 col-sm-3">
-                        <label for="default_categoryinput" style="font-size: 0.9rem;">دسته بندی پیش فرض</label>
-                        
-                          <select name="default_category" style="background-color: rgb(243, 243, 243);" id="default_categoryinput" class="form-control">
-                            <option selected value="true">فعال</option>
-                            <option value="false">غیر فعال</option>                          
-                          </select>                                                     
-                       
-                      </div>
-
-                      <div class="form-group mb-2">
-                        <button type="submit" class="btn btn-primary" style="padding: 5px 20px; font-size: 0.85rem;">ثبت اطلاعات</button>
-                      </div>
-
-                    </div> <!-- /.col -->
+                  <div class="form-group mb-3">
+                    <label for="image_input" style="font-size: 0.9rem;">انتخاب تصویر</label>
+                    <input type="file" name="image" id="image_input" class="form-control-file border">
                   </div>
-              </form>
 
-            </div>
-          </div> <!-- / .card -->
-        </div> <!-- .col-12 -->
-      </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-  </main> <!-- main -->
+                  <div class="form-group mb-3">
+                    <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
+                    <input type="text" name="title" id="titleinput" class="form-control"
+                      style="background-color: rgb(243, 243, 243);" required>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="sluginput" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                    <input type="text" id="sluginput" name="slug" class="form-control"
+                      style="background-color: rgb(243, 243, 243);" placeholder="" required>
+                  </div>
+
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="description_input">توضیحات</label>
+                    <div class="col-sm-12">
+                      <textarea name="description" id="editor" rows="10" cols="80"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="tags_input">برچسب ها</label>
+                    <div class="col-sm-12">
+                      <textarea name="tags" class="form-control"
+                        style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input"
+                        rows="6"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3 col-sm-6">
+                    <label for="parentinput" style="font-size: 0.9rem;">دسته بندی والد</label>
+
+                    <select name="parent" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
+                      class="form-control select2" id="parentinput">
+
+                      <option></option>
+
+                      <option value="6589d430053a84a4ed2d9829">نامشخص</option>
+
+                      <optgroup>
+
+                        <option value=""></option>
+
+                      </optgroup>
+                    </select>
+                    <div class="invalid-feedback"> Please select a valid state. </div>
+
+                  </div>
+
+                  <div class="form-group mb-3 col-sm-3">
+                    <label for="showInArchiveinput" style="font-size: 0.9rem;">نمایش در آرشیو</label>
+                    <select name="showInArchive" style="background-color: rgb(243, 243, 243);" id="showInArchiveinput"
+                      class="form-control">
+                      <option selected value="true">فعال</option>
+                      <option value="false">غیر فعال</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-3 col-sm-3">
+                    <label for="returnedinput" style="font-size: 0.9rem;">دسته بندی قابل مرجوعی</label>
+                    <select name="returned" style="background-color: rgb(243, 243, 243);" id="returnedinput"
+                      class="form-control">
+                      <option selected value="true">فعال</option>
+                      <option value="false">غیر فعال</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-3 col-sm-3">
+                    <label for="default_categoryinput" style="font-size: 0.9rem;">دسته بندی پیش فرض</label>
+
+                    <select name="default_category" style="background-color: rgb(243, 243, 243);"
+                      id="default_categoryinput" class="form-control">
+                      <option selected value="true">فعال</option>
+                      <option value="false">غیر فعال</option>
+                    </select>
+
+                  </div>
+
+                  <div class="form-group mb-2">
+                    <button onclick="doSaveNewsCategory()" id="call-detail" class='btn btn-primary'
+                      style='padding: 5px 20px; font-size: 0.85rem;'>ثبت اطلاعات</button>
+                  </div>
+
+                </div> <!-- /.col -->
+              </div>
+            </form>
+
+          </div>
+        </div> <!-- / .card -->
+      </div> <!-- .col-12 -->
+    </div> <!-- .row -->
+  </div> <!-- .container-fluid -->
+</main> <!-- main -->
