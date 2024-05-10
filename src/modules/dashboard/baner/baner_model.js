@@ -5,7 +5,9 @@ const BanerSchema = new Schema({
     file: {type: Types.ObjectId, ref: "file"},
     title: {type: String, required: true},
     target: {type: String},
-    link: {type: String}
+    link: {type: String},
+    sub_title: {type: String},
+    description: {type: String}
 });
 
 const BanerModel = model("baner", BanerSchema);
