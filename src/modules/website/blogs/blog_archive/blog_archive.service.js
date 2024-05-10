@@ -1,0 +1,9 @@
+
+class BlogArchiveService{
+    #model;
+    constructor(){
+
+    }
+
+   
+}

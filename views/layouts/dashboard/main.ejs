@@ -13,6 +13,11 @@
       <title>داشبورد | </title>
 
       <%}%>
+
+    <!-- file uploaded -->
+    <!-- <link rel="stylesheet" href="/dashboard/upload_file/bootstrap.min.css" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="/dashboard/upload_file/fileinput.min.css" media="all" type="text/css">
+    <link rel="stylesheet" href="/dashboard/upload_file/all.css" crossorigin="anonymous">
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="/dashboard/css/simplebar.css">
     <!-- Fonts CSS -->
@@ -42,7 +47,12 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <!-- ویرایشگر -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+    <style type="text/css">
+      .ck-editor__editable_inline{
+        height: 450px;
+      }
+    </style>
     <%-style%>
 
   </head>
@@ -57,25 +67,15 @@
       
       
     </div>
+<!-- file upload -->
+<script src="/dashboard/upload_file/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="/dashboard/upload_file/popper.min.js"></script>
+<script src="/dashboard/upload_file/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="/dashboard/upload_file/fileinput.min.js"></script>
+
    <!-- ویراشگر -->
-   <script>
-    ClassicEditor
-            .create( document.querySelector( '#editor' ), {
-              language: {
-                ui: 'en',
-                content: "fa"
-              },
-              image: {
-                toolbar: [ 'toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit' ]
-              }
-            } )
-            .then( editor => {
-                    console.log( editor );
-            } )
-            .catch( error => {
-                    console.error( error );
-            } );
-   </script>
+   
+   
    <!-- sweetAlert2 -->
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
 
@@ -383,6 +383,7 @@
   <script type="text/javascript" src="/dashboard/datapicker/jquery.min.js"></script>
   <script type="text/javascript" src="/dashboard/datapicker/jquery.mpdatepicker.min.js"></script>
   <link type="text/css" rel="stylesheet" href="/dashboard/datapicker/jquery.mpdatepicker.min.css"/>
+  
   <script>
      $(function () {
       $(".sample-date-picker").mpdatepicker({

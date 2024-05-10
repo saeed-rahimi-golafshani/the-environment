@@ -64,6 +64,7 @@
                            <li><a href="causes-details.html">Causes Details</a> </li>
                         </ul>
                      </li>
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false"> Pages </a>
@@ -135,3 +136,28 @@
       <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
    </form>
 </div>
+<!--Inner Header Start-->
+<section class="wf100 p100 inner-header">
+   <div class="container">
+      <h1>
+         <%= slug%>
+      </h1>
+      <ul>
+         <li><a href="/">صفحه اصلی</a></li>
+         <%if(listOgBlogCategoryByCode.parent){%>
+            <li><a href="#">
+               <%= listOgBlogCategoryByCode.parent.title%>
+            </a></li>
+            <li><a href="#">
+                  <%= listOgBlogCategoryByCode.title%>
+               </a></li>
+            
+            <%} else{%>
+               <li><a href="#">
+                     <%= listOgBlogCategoryByCode.title%>
+                  </a></li>
+               <%}%>
+      </ul>
+   </div>
+</section>
+<!--Inner Header End-->

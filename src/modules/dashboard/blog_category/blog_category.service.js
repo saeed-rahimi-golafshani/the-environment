@@ -13,13 +13,16 @@ const {
 const { default: slugify } = require("slugify");
 const { createBlogCategorySchema } = require("./blog_category.validation");
 const { BLOGCATEGORY_BLACKLIST } = require("../../../common/utills/constrant");
+const blogModel = require("../blog/blog_model");
 
 class BlogCategoryService {
     #model;
+    #blog_Model;
 
     constructor() {
         autoBind(this);
         this.#model = BologCategoryModel;
+        this.#blog_Model = blogModel;
     }
 
     async createBlogCategory(req, blogCategoryDto) {
@@ -52,9 +55,7 @@ class BlogCategoryService {
         return blogCategory;
     }
     async updateBlogCategory(code, blogCategoryDto) {
-        console.log(blogCategoryDto);
         const requestBody = copyObject(blogCategoryDto);
-        console.log(requestBody);
         const checkExistBlogCategory = await this.listOfBlogCategoryByCode(
             code
         );
@@ -84,9 +85,15 @@ class BlogCategoryService {
             requestBody.parent = existBlogCategory._id;
         }
         const updatedTime = convertGregorianDateToPersionDateToToday();
-        const updateResault = await this.#model.updateOne({code: checkExistBlogCategory.code}, {$set: requestBody, updatedAt: updatedTime});
-        if(updateResault.modifiedCount == 0) throw new createHttpError.InternalServerError(blogCategoryMessage.internalServerError);
-        return updateResault 
+        const updateResault = await this.#model.updateOne(
+            { code: checkExistBlogCategory.code },
+            { $set: requestBody, updatedAt: updatedTime }
+        );
+        if (updateResault.modifiedCount == 0)
+            throw new createHttpError.InternalServerError(
+                blogCategoryMessage.internalServerError
+            );
+        return updateResault;
     }
     async listOfBlogCategory() {
         const blogCategory = await this.#model
@@ -101,6 +108,41 @@ class BlogCategoryService {
         if (!blogCategory)
             throw new createHttpError.NotFound(blogCategoryMessage.notFound);
         return blogCategory;
+    }
+    async listOfBlogCategoryWitoutParent() {
+        const blogCategory = await this.#model
+            .find({ parent: undefined })
+            .populate([{ path: "parent" }]);
+        return blogCategory;
+    }
+    async listOfBlogCategoryByParent() {
+        const blogCategory = await this.#model
+            .find({ parent: {$exists: true}})
+            .populate([{ path: "parent" }]);
+        return blogCategory;
+    }
+    async listOfBlogArchiveByCode(code, perPage, skip) {
+        let checkBlogCategory, blogCategory, blogCategoryId, listOfBlog;
+        checkBlogCategory = await this.#model.findOne({ code });
+        blogCategory = await this.#model
+            .find({
+                $or: [
+                    { _id: checkBlogCategory._id },
+                    { parent: checkBlogCategory._id },
+                ],
+            })
+            .populate([{ path: "parent" }]);
+        blogCategoryId = blogCategory.map((item) => item._id);
+        listOfBlog = await this.#blog_Model
+            .find({ blog_category_id: blogCategoryId })
+            .skip(skip)
+            .limit(perPage)
+            .populate([
+                { path: "blog_category_id", select: { title: 1 } },
+                { path: "file" },
+            ])
+            
+        return listOfBlog;
     }
 }
 

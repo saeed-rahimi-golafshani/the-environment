@@ -2,10 +2,14 @@ const autoBind = require("auto-bind");
 const BlogService = require("./blog.service");
 const SettingsService = require("../setting/setting_service");
 const { CODE_NAME } = require("../../../common/utills/constrant");
-const { UniqueCode, convertGregorianDateToPersionDateToToday } = require("../../../common/utills/public.function");
+const {
+    UniqueCode,
+    convertGregorianDateToPersionDateToToday,
+    convertOfPersionDateToGetTime,
+} = require("../../../common/utills/public.function");
 const blogModel = require("./blog_model");
 const blogMessage = require("./blog.messages");
-const BlogCategoryService = require("../blog_category/blog_category.service")
+const BlogCategoryService = require("../blog_category/blog_category.service");
 
 class BlogController {
     #service;
@@ -23,165 +27,296 @@ class BlogController {
 
     async blogsOFList(req, res, next) {
         try {
+            const { search, blogCategory, blogType, publishedStatus } =
+                req.query;
 
-            const { search, blogCategory, blogType, publishedStatus } = req.query;
-           
             let showTable = false;
-            let blog, blogCount = 0;
-            if (search && blogCategory == "" &&  blogType == "" && publishedStatus == "") {
-                blog = await this.#blogModel.find({$text: { $search: search }}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search =="" && blogCategory && blogType == "" && publishedStatus == "") {
-                blog = await this.#blogModel.find({blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search =="" && blogCategory =="" && blogType && publishedStatus == "") {
-                blog = await this.#blogModel.find({blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search =="" && blogCategory =="" && blogType == "" && publishedStatus) {
-                blog = await this.#blogModel.find({published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory && blogType == "" && publishedStatus == "") {
-                blog = await this.#blogModel.find({$text: { $search: search }, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory == "" && blogType && publishedStatus == "") {
-                blog = await this.#blogModel.find({$text: { $search: search }, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory == "" && blogType == "" && publishedStatus) {
-                blog = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search == "" && blogCategory && blogType && publishedStatus == "") {
-                blog = await this.#blogModel.find({blog_category_id: blogCategory, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_category_id: blogCategory, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search == "" && blogCategory && blogType == "" && publishedStatus) {
-                blog = await this.#blogModel.find({blog_category_id: blogCategory, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_category_id: blogCategory, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search == "" && blogCategory == "" && blogType && publishedStatus) {
-                blog = await this.#blogModel.find({blog_type: blogType, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_type: blogType, published_status: publishedStatus}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory && blogType && publishedStatus == "") {
-                blog = await this.#blogModel.find({$text: { $search: search }, blog_category_id: blogCategory, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, blog_category_id: blogCategory, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory == "" && blogType && publishedStatus) {
-                blog = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus, blog_type: blogType}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search && blogCategory && blogType == "" && publishedStatus) {
-                blog = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search }, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search == "" && blogCategory && blogType && publishedStatus) {
-                blog = await this.#blogModel.find({blog_type: blogType, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({blog_type: blogType, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
+            let blog,
+                blogCount = 0;
+            if (
+                search &&
+                blogCategory == "" &&
+                blogType == "" &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({ $text: { $search: search } })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({ $text: { $search: search } })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory &&
+                blogType == "" &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({ blog_category_id: blogCategory })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({ blog_category_id: blogCategory })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory == "" &&
+                blogType &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({ blog_type: blogType })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({ blog_type: blogType })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory == "" &&
+                blogType == "" &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({ published_status: publishedStatus })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({ published_status: publishedStatus })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory &&
+                blogType == "" &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory == "" &&
+                blogType &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({ $text: { $search: search }, blog_type: blogType })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({ $text: { $search: search }, blog_type: blogType })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory == "" &&
+                blogType == "" &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory &&
+                blogType &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        blog_category_id: blogCategory,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        blog_category_id: blogCategory,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory &&
+                blogType == "" &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        blog_category_id: blogCategory,
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        blog_category_id: blogCategory,
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory == "" &&
+                blogType &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory &&
+                blogType &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_category_id: blogCategory,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_category_id: blogCategory,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory == "" &&
+                blogType &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                        blog_type: blogType,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search &&
+                blogCategory &&
+                blogType == "" &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory &&
+                blogType &&
+                publishedStatus
+            ) {
+                blog = await this.#blogModel
+                    .find({
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
             } else if (search && blogCategory && blogType && publishedStatus) {
-                blog = await this.#blogModel.find({$text: { $search: search },blog_type: blogType, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({$text: { $search: search },blog_type: blogType, published_status: publishedStatus, blog_category_id: blogCategory}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            } else if (search == "" && blogCategory == "" && blogType == "" && publishedStatus == "") {
-                blog = await this.#blogModel.find({}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
+                blog = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({
+                        $text: { $search: search },
+                        blog_type: blogType,
+                        published_status: publishedStatus,
+                        blog_category_id: blogCategory,
+                    })
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            } else if (
+                search == "" &&
+                blogCategory == "" &&
+                blogType == "" &&
+                publishedStatus == ""
+            ) {
+                blog = await this.#blogModel
+                    .find({})
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({})
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
             } else {
-                blog = await this.#blogModel.find({}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]);
-                blogCount = await this.#blogModel.find({}).populate([
-                    {path: "blog_category_id"},
-                    {path: "file"}
-                ]).countDocuments();
-            }          
+                blog = await this.#blogModel
+                    .find({})
+                    .populate([{ path: "blog_category_id" }, { path: "file" }]);
+                blogCount = await this.#blogModel
+                    .find({})
+                    .populate([{ path: "blog_category_id" }, { path: "file" }])
+                    .countDocuments();
+            }
 
             if (blogCount == 0) {
                 showTable = false;
@@ -189,10 +324,8 @@ class BlogController {
                 showTable = true;
             }
 
-
-
-
-            const blogCategories = await this.#blogCategoryService.listOfBlogCategory();
+            const blogCategories =
+                await this.#blogCategoryService.listOfBlogCategory();
 
             const setting = await this.#setting_service.listOfSetting();
             res.render("./pages/dashboard/blogs/blog_list.ejs", {
@@ -200,7 +333,7 @@ class BlogController {
                 blogCategories,
                 blog,
                 blogCount,
-                showTable
+                showTable,
             });
         } catch (error) {
             next(error);
@@ -218,8 +351,8 @@ class BlogController {
                 blogs,
                 blogCategory,
                 setting,
-                messages: req.flash('messages'),
-                errors: req.flash('errors')
+                messages: req.flash("messages"),
+                errors: req.flash("errors"),
             });
         } catch (error) {
             next(error);
@@ -255,14 +388,61 @@ class BlogController {
                 published_status,
                 createdAt: craeteTime,
                 updatedAt: updateTime,
-            })
-            res.locals.layout =
-                "./pages/dashboard/blogs/blog_add.ejs";
+            });
+            res.locals.layout = "./pages/dashboard/blogs/blog_add.ejs";
             req.flash("messages", blogMessage.created);
             return res.redirect("/add");
-
         } catch (error) {
-            req.flash('errors', error.message)
+            req.flash("errors", error.message);
+            next(error);
+        }
+    }
+    async getUpdateBlog(req, res, next) {
+        const { code } = req.params;
+
+        const blog = await this.#service.listOfBlogByCode(code);
+        const blogCategory =
+            await this.#blogCategoryService.listOfBlogCategory();
+        const setting = await this.#setting_service.listOfSetting();
+
+        res.render("./pages/dashboard/blogs/blog_update.ejs", {
+            setting,
+            blogCategory,
+            blog,
+            messages: req.flash("messages"),
+            errors: req.flash("errors"),
+        });
+    }
+    async postUpdateBlog(req, res, next) {
+        try {
+            const { code } = req.params;
+            const {
+                blog_category_id,
+                title,
+                slug,
+                short_text,
+                text,
+                tags,
+                blog_type,
+                published_time,
+                published_status,
+            } = req.body;
+            await this.#service.updateBlog(code, req, {
+                blog_category_id,
+                title,
+                slug,
+                short_text,
+                text,
+                tags,
+                blog_type,
+                published_time,
+                published_status,
+            });
+            res.locals.layout = "./pages/dashboard/blogs/blogs_update.ejs";
+            req.flash("messages", blogMessage.updated);
+            return res.redirect("/update");
+        } catch (error) {
+            req.flash("errors", error.message);
             next(error);
         }
     }

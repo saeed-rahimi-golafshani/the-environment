@@ -6,7 +6,7 @@
         <div class="row align-items-center mb-2">
           <!-- داشبورد -->
           <div class="col">
-            <h2 class="h5 page-title">بلاگ</h2>
+            <h2 class="h5 page-title">لیست خبرها</h2>
           </div>
         </div>
 
@@ -14,7 +14,7 @@
           <div class="card shadow mb-4">
             <div class="card-header">
               <strong class="card-title">جستجو</strong>
-              <a href="/dashboard/blog/add"
+              <a href="/dashboard/news/add"
                 style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
                 <i class="fa fa-plus" style="margin: 5px;"></i>
                 افزودن</a>
@@ -22,23 +22,22 @@
             </div>
 
             <div class="card-body">
-              <form action="" method="get">
+              <form action="/dashboard/news" method="get">
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label for="search" style="font-size: 0.9rem">عبارات جستجو</label>
-                    <input id="searchInput" type="text" class="form-control" name="search" value="">
+                    <input id="search" type="text" class="form-control" name="search" value="">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="blog_category" style="font-size: 0.9rem">دسته بندی</label>
+                    <label for="newsCategory" style="font-size: 0.9rem">دسته بندی</label>
                     <div class="col-sm-9">
-                      <select name="blogCategory" style="font-size: 0.75rem;" class="form-control select2"
-                        id="blog_category">
+                      <select name="newsCategory" style="font-size: 0.75rem;" class="form-control" id="newsCategory">
                         <option value=""></option>
                         <optgroup>
-                          <%blogCategories.forEach(item=> {%>
+                          <%newsCategories.forEach(item=> {%>
                             <option value="<%=item._id%>">
                               <%=item.title%>
                             </option>
@@ -52,12 +51,11 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="blog_type">نوع</label>
-                    <select name="blogType" id="blog_type" class="form-control">
+                    <label for="breakingNews">خبر فوری</label>
+                    <select name="breakingNews" id="breakingNews" class="form-control">
                       <option selected value="">همه</option>
-                      <option value="text">متن</option>
-                      <option value="podcast">پادکست</option>
-                      <option value="video">ویدئو</option>
+                      <option value="true">منتشر شده</option>
+                      <option value="false">پیش نویس</option>
                     </select>
                   </div>
                 </div>
@@ -87,7 +85,7 @@
                   <div class="toolbar">
                     <div class="card-header">
                       <strong class="card-title" style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد
-                        نتایج : <%=blogCount%> </strong>
+                        نتایج : <%=newsCount%></strong>
                     </div>
                   </div>
 
@@ -95,53 +93,54 @@
                     <thead>
                       <tr style="font-size: 0.85rem;">
                         <th></th>
-                        <th>کد کاربری</th>
+                        <th>کد خبر</th>
                         <th>عنوان</th>
                         <th>دسته بندی</th>
                         <th>وضعیت انتشار</th>
-                        <th>نوع</th>
-                        <!-- <th>محصول</th>
-                        <th>دسته بندی محصول</th> -->
+                        <th>خبر فوری</th>
                         <th>مدیریت</th>
                       </tr>
                     </thead>
-                    <%blog.forEach(item=> {%>
+                    <%news.forEach(item=> {%>
                       <tbody>
                         <tr>
                         <tr style="font-size: 0.85rem;">
                           <td>
                             <div class="avatar avatar-md">
-                              <img src="<%=item.file.coverImageUrl%>" alt="..." class="avatar-img rounded-circle">
+                              <img src="<%=item.file.coverImageUrl%>" alt="..." class="avatar-img" style="border-radius: 20%;">
                             </div>
                           </td>
-                          <td><%=item.code%></td>
-                          <td><%=item.title%></td>
-                          <td><%=item.blog_category_id.title%></td>
-                          <%if(item.published_status == true) {%>
-                          <td><span class="badge badge-pill badge-success"
-                              style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>
-                              <%} else{%>
-                          <td><span class="badge badge-pill badge-danger"
-                              style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>
-                              <%}%>   
-                              <%if(item.blog_type == "text") {%>
-
-                          <td>متن</td>
-                          <%} else if(item.blog_type == "podcast"){%>
-                          <td>پادکست</td>
-                          <%} else if(item.blog_type == "video") {%>
-                          <td>ویدیو</td>
-                          <%}%>
-                          <!-- <td> - </td>
-                          <td> - </td> -->
                           <td>
-                            <a href="/dashboard/blog/update/<%=item.code%>" class="btn mb-2 btn-outline-success"><i
-                                class="fa fa-edit"></i></a>
-                            <a href="/panel/user/id/" class="btn mb-2 btn-outline-success"><i
-                                class="far fa-eye"></i></a>
-                            <a href="" data-toggle="modal" data-target="#verticalModal"
-                              class="btn mb-2 btn-outline-success"><i class="fas fa-trash-alt"></i></a>
+                            <%=item.code%>
                           </td>
+                          <td>
+                            <%=item.title%>
+                          </td>
+                          <td>
+                            <%=item.news_category_id.title%>
+                          </td>
+                          <%if(item.published_status==true) {%>
+                            <td><span class="badge badge-pill badge-success"
+                                style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>
+                            <%} else{%>
+                              <td><span class="badge badge-pill badge-danger"
+                                  style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>
+                              <%}%>
+                                <%if(item.breaking_news==true) {%>
+                                  <td><span class="badge badge-pill badge-success"
+                                      style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>
+                                  <%} else{%>
+                                    <td><span class="badge badge-pill badge-danger"
+                                        style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>
+                                    <%}%>
+                                      <td>
+                                        <a href="/dashboard/news/update/<%= item.code%>" class="btn mb-2 btn-outline-success"><i
+                                            class="fa fa-edit"></i></a>
+                                        <a href="/panel/user/id/" class="btn mb-2 btn-outline-success"><i
+                                            class="far fa-eye"></i></a>
+                                        <a href="" data-toggle="modal" data-target="#verticalModal"
+                                          class="btn mb-2 btn-outline-success"><i class="fas fa-trash-alt"></i></a>
+                                      </td>
                         </tr>
                         </tr>
                       </tbody>
@@ -187,8 +186,8 @@
               <!-- <img src="./assets/images/logo.svg" class="navbar-brand-img brand-sm mx-auto mb-4" alt="..."> -->
               <h4>نتیجه ای یافت نشد</h4>
             </div>
-            <%}%>
 
+            <%}%>
 
 
 

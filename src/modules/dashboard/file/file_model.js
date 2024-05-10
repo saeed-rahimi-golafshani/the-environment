@@ -13,7 +13,7 @@ const FileSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['setting', 'blog']
+        enum: ['setting', 'blog', 'news_category', 'news', 'organization']
     },
     createdAt: {type: String},
     updatedAt: {type: String},

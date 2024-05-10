@@ -13,17 +13,21 @@ module.exports = {
         UNACTIVE: false,
     }),
     CODE_NAME: Object.freeze({
+        BLOG: "BC",
+        BLOG_CATEGORY: "CAT_BC",
+        SETTINGS: "SETT",
+        NEWS_CATEGORY: "NEWS_CAT",
+        NEWS: "NEWS",
+        ORGGANIZATION: "ORG",
+
         USER: "U",
         PRODUCT: "PRD",
-        BLOG: "BC",
         PRODUCT_CATEGORY: "CAT_PRD",
-        BLOG_CATEGORY: "CAT_BC",
         BRAND: "BR",
         PRODUCT_DETAILS: "PD",
         PRODUCT_DETAILS_OPTION: "PDO",
         PRODUCT_DETAILS_CATEGORY: "PDC",
         PRODUCT_CONFIGRATION: "PC",
-        SETTINGS: "SETT",
         MENU: "MEN",
         SLIDER: "SLI",
         SLIDER_TITLE: "SLIT",
@@ -42,7 +46,17 @@ module.exports = {
         EMAIL: "email"
     }),
     BLOGCATEGORY_BLACKLIST: Object.freeze({
-        BLOG_CATEGORY_CODE: "code",
+        CODE: "code",
+        CREATEDAT: "createdAt",
+        UPDATEDAT: "updatedAt"
+    }),
+    NEWSCATEGORY_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEDAT: "createdAt",
+        UPDATEDAT: "updatedAt"
+    }),
+    NEWS_BLACKLIST: Object.freeze({
+        CODE: "code",
         CREATEDAT: "createdAt",
         UPDATEDAT: "updatedAt"
     }),

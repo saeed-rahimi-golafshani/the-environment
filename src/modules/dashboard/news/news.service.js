@@ -1,5 +1,7 @@
 const autoBind = require("auto-bind");
-const { createBlogSchema } = require("./blog.validation");
+const NewsModel = require("./news.model");
+const FileModel = require("../file/file_model");
+const { createNewsSchema } = require("./news.validation");
 const { default: slugify } = require("slugify");
 const {
     alreadyExistBySlug,
@@ -11,61 +13,54 @@ const {
     getFileFilename,
     getFileSize,
     deleteFileInPathArray,
-    deleteInvalidPropertyObject,
     copyObject,
-    convertDate,
+    deleteInvalidPropertyObject,
 } = require("../../../common/utills/public.function");
-const blogModel = require("./blog_model");
 const createHttpError = require("http-errors");
-const blogMessage = require("./blog.messages");
-const FileModel = require("../file/file_model");
-const BLOG_BLACKLIST = require("../../../common/utills/constrant");
-const sharp = require("sharp");
+const newsMessage = require("./news.message");
+const { NEWS_BLACKLIST } = require("../../../common/utills/constrant");
+const { request } = require("express");
 
-class BlogService {
+class NewsService {
     #model;
     #fileModel;
 
     constructor() {
         autoBind(this);
-        this.#model = blogModel;
+        this.#model = NewsModel;
         this.#fileModel = FileModel;
     }
 
-    async craeteBlog(req, blogDto) {
-        let createBlog, createFileDetailes;
-        await createBlogSchema.validateAsync(req.body);
-        if (blogDto?.slug) {
-            blogDto.slug = slugify(blogDto.slug);
-            await alreadyExistBySlug(blogDto.slug, this.#model);
+    async createNews(req, newsDto) {
+        let create_news, createFileDetailes;
+        let createdTime = convertGregorianDateToPersionDateToToday();
+        let updatedTime = convertGregorianDateToPersionDateToToday();
+        await createNewsSchema.validateAsync(req.body);
+        if (newsDto?.slug) {
+            newsDto.slug = slugify(newsDto.slug);
+            await alreadyExistBySlug(newsDto.slug, this.#model);
         } else {
-            blogDto.slug = slugify(blogDto.title);
+            newsDto.slug = slugify(newsDto.title);
         }
-        if(blogDto.published_time){
-            blogDto.published_time = convertDate(blogDto.published_time)
-        }
-        createBlog = await this.#model.create(blogDto);
-        if (!createBlog)
+        create_news = await this.#model.create(newsDto);
+        if (!create_news)
             throw new createHttpError.InternalServerError(
-                blogMessage.internalServerError
+                newsMessage.internalServerError
             );
         if (req?.body?.fileUploadPath) {
-            let createdTime = convertGregorianDateToPersionDateToToday();
-            let updatedTime = convertGregorianDateToPersionDateToToday();
-            const type_files = listOfImageFromRequest(
+            let type_files = listOfImageFromRequest(
                 req.files.image || [],
                 req.body.fileUploadPath
             );
-
             const orginalName = getFileOrginalname(req.files["image"]);
             const fileEncoding = getFileEncoding(req.files["image"]);
             const mimeType = getFileMimetype(req.files["image"]);
             const fileName = getFileFilename(req.files["image"]);
             const fileSize = getFileSize(req.files["image"]);
             createFileDetailes = await this.#fileModel.create({
-                type_Id: createBlog._id,
+                type_Id: create_news._id,
                 cover: type_files,
-                type: "blog",
+                type: "news",
                 originalnames: orginalName,
                 encoding: fileEncoding,
                 mimetype: mimeType,
@@ -74,45 +69,47 @@ class BlogService {
                 createdAt: createdTime,
                 updatedAt: updatedTime,
             });
-
             if (!createFileDetailes) {
                 if (type_files) {
                     deleteFileInPathArray(type_files);
                     throw new createHttpError.InternalServerError(
-                        blogMessage.internalServerError
+                        newsMessage.internalServerError
                     );
                 } else {
                     throw new createHttpError.InternalServerError(
-                        blogMessage.internalServerError
+                        newsMessage.internalServerError
                     );
                 }
             }
         }
-
         const getFileId = createFileDetailes._id;
         await this.#model.updateOne(
-            { _id: createBlog._id },
+            { _id: create_news._id },
             { file: getFileId }
         );
-        return createBlog;
+        return create_news;
     }
-    async updateBlog(code, req, blogDto) {
-        let updatedTime = convertGregorianDateToPersionDateToToday();
-        const requestBody = copyObject(blogDto);
-        let checkExistBlog = await this.listOfBlogByCode(code);
-        const blackListFeilds = Object.values(BLOG_BLACKLIST);
+    async updateNews(code, req, newsDto) {
+        let updateTime = convertGregorianDateToPersionDateToToday();
+        const requestBody = copyObject(newsDto);
+        let checkExistNews = await this.listOfNewsByCode(code);
+
+        const blackListFeilds = Object.values(NEWS_BLACKLIST);
         deleteInvalidPropertyObject(requestBody, blackListFeilds);
+
         if (requestBody.published_status == true) {
-            requestBody.published_status == true;
+            requestBody.published_status = true;
         } else if (requestBody.published_status == false) {
             requestBody.published_status = false;
         }
-        if(requestBody.published_time){
-            requestBody.published_time = convertDate(requestBody.published_time)
+        if (requestBody.breaking_news == true) {
+            requestBody.breaking_news = true;
+        } else if (requestBody.breaking_news == false) {
+            requestBody.breaking_news = false;
         }
 
         const fileId = await this.#fileModel.findOne({
-            type_Id: checkExistBlog._id,
+            type_Id: checkExistNews._id,
         });
         if (req?.body?.fileUploadPath && req?.body?.filename) {
             const file_refrence = listOfImageFromRequest(
@@ -124,7 +121,6 @@ class BlogService {
             const mimeType = getFileMimetype(req.files["image"]);
             const fileName = getFileFilename(req.files["image"]);
             const fileSize = getFileSize(req.files["image"]);
-
             deleteFileInPathArray(fileId.cover);
             await this.#fileModel.updateOne(
                 {
@@ -137,36 +133,33 @@ class BlogService {
                     mimetype: mimeType,
                     filename: fileName,
                     size: fileSize,
-                    updatedAt: updatedTime,
+                    updatedAt: updateTime,
                 }
             );
         }
-        deleteInvalidPropertyObject(requestBody, []);
         const updateResault = await this.#model.updateOne(
-            { _id: checkExistBlog._id },
-            { $set: requestBody, updatedAt: updatedTime }
+            { _id: checkExistNews._id },
+            { $set: requestBody, updatedAt: updateTime }
         );
-        if (updateResault.modifiedCount == 0) {
+        if (updateResault.modifiedCount == 0)
             throw new createHttpError.InternalServerError(
-                blogMessage.internalServerError
+                newsMessage.internalServerError
             );
-        }
         return updateResault;
     }
-    async listOfBlogs() {
-        let blogs;
-        blogs = await this.#model
+    async listOfNews() {
+        let news;
+        news = await this.#model
             .find({})
-            .populate([{ path: "blog_category_id" }, { path: "file" }]);
-        return blogs;
+            .populate([{ path: "news_category_id" }, { path: "file" }]);
+        return news;
     }
-    async listOfBlogByCode(code) {
-        let blog;
-        blog = await this.#model
+    async listOfNewsByCode(code) {
+        const news = await this.#model
             .findOne({ code })
-            .populate([{ path: "blog_category_id" }, { path: "file" }]);
-        return blog;
+            .populate([{ path: "file" }, { path: "news_category_id" }]);
+        return news;
     }
 }
 
-module.exports = new BlogService();
+module.exports = new NewsService();

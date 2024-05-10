@@ -6,7 +6,7 @@
 
         <div class="card shadow mb-4">
           <div class="card-header">
-            <strong class="card-title">افزودن دسته بندی محصول</strong>
+            <strong class="card-title">افزودن دسته بندی خبر</strong>
             <a href="/dashboard/news_category"
               style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
               <i class="fa fa-sign-out" style="margin: 5px;"></i>
@@ -17,13 +17,17 @@
               افزودن</a>
           </div>
           <div class="card-body">
+
             <form id="frm_add_newsCategory">
               <div class="row">
                 <div class="col-md-6">
 
+                  <input type="text" name="code" id="code" value="<%= code%>" hidden>
+
                   <div class="form-group mb-3">
                     <label for="image_input" style="font-size: 0.9rem;">انتخاب تصویر</label>
-                    <input type="file" name="image" id="image_input" class="form-control-file border">
+                    <input type="file" name="image" id="image_input" class="file" style="padding-left: 10px;"
+                      data-browse-on-zone-click="true">
                   </div>
 
                   <div class="form-group mb-3">
@@ -60,24 +64,28 @@
 
                     <select name="parent" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
                       class="form-control select2" id="parentinput">
-
-                      <option></option>
-
-                      <option value="6589d430053a84a4ed2d9829">نامشخص</option>
-
-                      <optgroup>
-
-                        <option value=""></option>
-
-                      </optgroup>
+                      <%if(listOfnewsCategory.parent){%>
+                        <option>
+                          <%= listOfnewsCategory.parent.title%>
+                        </option>
+                        <%} else{%>
+                          <option value="6589d430053a84a4ed2d9829">نامشخص</option>
+                          <%}%>
+                            <optgroup>
+                              <%listOfnewsCategory.forEach(item=> {%>
+                                <option value="<%= item._id%>">
+                                  <%= item.title%>
+                                </option>
+                                <%})%>
+                            </optgroup>
                     </select>
                     <div class="invalid-feedback"> Please select a valid state. </div>
 
                   </div>
 
                   <div class="form-group mb-3 col-sm-3">
-                    <label for="showInArchiveinput" style="font-size: 0.9rem;">نمایش در آرشیو</label>
-                    <select name="showInArchive" style="background-color: rgb(243, 243, 243);" id="showInArchiveinput"
+                    <label for="show_in_archive" style="font-size: 0.9rem;">نمایش در آرشیو</label>
+                    <select name="show_in_archive" style="background-color: rgb(243, 243, 243);" id="show_in_archive"
                       class="form-control">
                       <option selected value="true">فعال</option>
                       <option value="false">غیر فعال</option>
@@ -85,19 +93,10 @@
                   </div>
 
                   <div class="form-group mb-3 col-sm-3">
-                    <label for="returnedinput" style="font-size: 0.9rem;">دسته بندی قابل مرجوعی</label>
-                    <select name="returned" style="background-color: rgb(243, 243, 243);" id="returnedinput"
+                    <label for="priority" style="font-size: 0.9rem;">دسته بندی پیش فرض</label>
+
+                    <select name="priority" style="background-color: rgb(243, 243, 243);" id="priority"
                       class="form-control">
-                      <option selected value="true">فعال</option>
-                      <option value="false">غیر فعال</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group mb-3 col-sm-3">
-                    <label for="default_categoryinput" style="font-size: 0.9rem;">دسته بندی پیش فرض</label>
-
-                    <select name="default_category" style="background-color: rgb(243, 243, 243);"
-                      id="default_categoryinput" class="form-control">
                       <option selected value="true">فعال</option>
                       <option value="false">غیر فعال</option>
                     </select>
@@ -113,9 +112,57 @@
               </div>
             </form>
 
+            <%if(messages){%>
+              <div class="alert">
+                <strong style="color: rgb(51, 141, 56);">
+                  <%= messages?? "" %>
+                </strong>
+              </div>
+              <%}%>
+                <%if(errors){%>
+
+                  <div class="alert">
+                    <strong style="color: rgb(245, 39, 108);">
+                      <%= errors?? "" %>
+                    </strong>
+                  </div>
+                  <%}%>
+
           </div>
         </div> <!-- / .card -->
       </div> <!-- .col-12 -->
     </div> <!-- .row -->
   </div> <!-- .container-fluid -->
 </main> <!-- main -->
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    window.setTimeout(function () {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+        $(this).remove();
+      });
+    }, 2000);
+
+  });
+</script>
+
+<script>
+  ClassicEditor
+    .create(document.querySelector('#editor'), {
+      language: {
+        ui: 'en',
+        content: "fa"
+      },
+      image: {
+        toolbar: ['toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit']
+      }
+    })
+    .then(editor => {
+      console.log(editor);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>

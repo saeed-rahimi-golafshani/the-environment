@@ -1,188 +1,257 @@
 <main role="main" class="main-content">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          
-          
-          <div class="card shadow mb-4">
-            <div class="card-header">
-                <strong class="card-title">ویرایش بلاگ</strong>
-                <a href="/panel/blog/" style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
-                    <i class="fa fa-sign-out" style="margin: 5px;"></i>
-                    بازگشت</a>
-                <a href="/panel/blog/add" style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
-                    <i class="fa fa-plus" style="margin: 5px;"></i>
-                    افزودن</a>
-              </div>
-            <div class="card-body">
-              <form action="/panel/blog/id/<%=blog.code%>" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-md-6">
-                      
-                        <div class="form-group mb-3">
-                          <label for="image_input" style="font-size: 0.9rem;">انتخاب تصویر</label>
-                          <input type="file" name="image" id="image_input" class="form-control-file border">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+
+        <div class="card shadow mb-4">
+          <div class="card-header">
+            <strong class="card-title">ویرایش بلاگ</strong>
+            <a href="/dashboard/blog/"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-sign-out" style="margin: 5px;"></i>
+              بازگشت</a>
+            <a href="/dashboard/blog/add"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-plus" style="margin: 5px;"></i>
+              افزودن</a>
+          </div>
+          <div class="card-body">
+            <form id="frm_updateBlog">
+              <div class="row">
+                <div class="col-md-8">
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="image_input" style="font-size: 0.9rem;">انتخاب تصویر</label>
+                      <input type="file" name="image" id="input-b1" class="file" style="padding-left: 10px;"
+                        data-browse-on-zone-click="true" placeholder="<%= blog.file.coverImageUrl%>">
+                    </div>
+
+                    <div class="card-deck mb-4" style="margin-right: 30px; margin-top: 20px;">
+                      <div class="card border-0 bg-transparent">
+                        <img src="<%=blog.file.coverImageUrl%>" alt="..." class="card-img-top img-fluid rounded">
+                        <div class="card-body">
+                          <h5 class="h6 card-title mb-1">نام فایل : <%= blog.file.filename%>
+                          </h5>
+                          <p class="card-text">
+                            <span class="badge badge-light text-muted mr-2">سایز تصویر : MB <%= blog.file.size%> </span>
+                            <span class="badge badge-pill badge-light text-muted">فرمت فایل : <%= blog.file.mimetype%>
+                                </span>
+                          </p>
                         </div>
-
-                        <div class="form-group mb-3">
-                            <label for="blog_type_input" style="font-size: 0.9rem;">نوع پست</label>
-                            <%if(blog.blog_type == "text") {%>
-                                <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input" class="form-control col-sm-3">
-                                    <option selected value="text">متن</option>
-                                    <option value="podcast">پادکست</option>                          
-                                    <option value="video">ویدئو</option>                          
-                                </select>
-                            <%} else if(blog.blog_type == "podcast"){%> 
-                                <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input" class="form-control col-sm-3">
-                                    <option value="text">متن</option>
-                                    <option selected value="podcast">پادکست</option>                          
-                                    <option value="video">ویدئو</option>                          
-                                </select>
-                            <%} else if(blog.blog_type == "video"){%>
-                                <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input" class="form-control col-sm-3">
-                                    <option value="text">متن</option>
-                                    <option value="podcast">پادکست</option>                          
-                                    <option selected value="video">ویدئو</option>                          
-                                </select>
-                            <%}%>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
-                            <%if(blog.title){%>
-                                <input type="text" name="title" id="titleinput" class="form-control" style="background-color: rgb(243, 243, 243);" placeholder="<%=blog.title%>">
-                            <%} else {%>
-                                <input type="text" name="title" id="titleinput" class="form-control" style="background-color: rgb(243, 243, 243);" placeholder="">
-                            <%}%>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="sluginput" style="font-size: 0.9rem;">عنوان انگلیسی</label>
-                            <%if(blog.slug) {%> 
-                                <input type="text" id="sluginput" name="slug" class="form-control" style="background-color: rgb(243, 243, 243);" placeholder="<%=blog.slug%>">
-                            <%} else {%> 
-                                <input type="text" id="sluginput" name="slug" class="form-control" style="background-color: rgb(243, 243, 243);" placeholder="">
-                            <%}%>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="blog_category_input" style="font-size: 0.9rem;">دسته بندی</label>
-                            <select name="blog_category_id" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);" class="form-control select2 col-sm-6" id="blog_category_input">
-                               <%if(blog.blog_category_id) {%> 
-                                <option value="<%=blog.blog_category_id._id%>"><%=blog.blog_category_id.title%></option>
-                               <%} else{%>
-                                <option></option>
-                                <%}%>
-                              <optgroup>
-                                 <%blogCategories.forEach(item => {%> 
-                                    <option value="<%=item._id%>"><%=item.title%></option>
-                                <%})%>
-                              </optgroup>
-                            </select>
-                            <div class="invalid-feedback"> Please select a valid state. </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label style="font-size: 0.9rem;" for="short_text_input">متن کوتاه</label>
-                            <div class="col-sm-12">
-                                <%if(blog.short_text){%>
-                                    <textarea name="short_text" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="short_text_input" rows="6" placeholder="<%=blog.short_text%>"></textarea>
-                                <%} else{%> 
-                                    <textarea name="short_text" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="short_text_input" rows="6" placeholder=""></textarea>
-                                <%}%>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                          <label style="font-size: 0.9rem;" for="text_input">متن</label>
-                          <div class="col-sm-12">
-                            <%if(blog.short_text){%>
-                            <textarea name="text" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="text_input" rows="6" placeholder="<%=blog.text%>"></textarea>
-                            <%} else{%> 
-                            <textarea name="text" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="text_input" rows="6" placeholder=""></textarea>
-                            <%}%>
-                          </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                          <label style="font-size: 0.9rem;" for="tags_input">برچسب ها (با - جدا شود)</label>
-                          <div class="col-sm-12">
-                            <%if(blog.tags){%>
-                                <textarea name="tags" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input" rows="6" placeholder="<%=blog.tags%>"></textarea>
-                            <%} else{%> 
-                                <textarea name="tags" class="form-control" style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input" rows="6" placeholder=""></textarea>
-                            <%}%>
-                          </div>
-                        </div>
-
-                        <!-- <div class="form-group mb-3">
-                          <label for="product_category_id" style="font-size: 0.9rem;">دسته بندی محصول</label>
-
-                          <select name="product_category_id" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);" class="form-control select2 col-sm-6" id="product_category_id">
-                              <option></option>
-                              <option value="6589d430053a84a4ed2d9829">نامشخص</option>
-                              <optgroup>
-                                  <option value=""></option>
-                              </optgroup>
-                          </select>
-                          <div class="invalid-feedback"> Please select a valid state. </div>
-                        </div> -->
-
-                        <!-- <div class="form-group mb-3">
-                          <label for="product_id" style="font-size: 0.9rem;">محصول</label>
-
-                          <select name="product_id" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);" class="form-control select2 col-sm-6" id="product_id">
-                              <option></option>
-                              <option value="6589d430053a84a4ed2d9829">نامشخص</option>
-                              <optgroup>
-                                  <option value=""></option>
-                              </optgroup>
-                          </select>
-                          <div class="invalid-feedback"> Please select a valid state. </div>
-                        </div> -->
-
-                        <div class="form-group mb-3">
-                          <label for="published_time" style="font-size: 0.9rem;">زمان انتشار</label>
-                          <div class="col-sm-6">
-                            <%if(blog.published_time){%> 
-                                <input name="published_time" style="background-color: rgb(243, 243, 243);" class="form-control sample-date-picker bg-white w-100 p-3" placeholder="<%=blog.published_time%>" type="text" id="published_time"> 
-                            <%} else{%> 
-                                <input name="published_time" style="background-color: rgb(243, 243, 243);" class="form-control sample-date-picker bg-white w-100 p-3" placeholder="" type="text" id="published_time">    
-                            
-                            <%}%>
-                          </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                          <label for="published_status" style="font-size: 0.9rem;">وضعیت انتشار</label>
-                          <div class="col-sm-3">
-                            <%if(blog.published_status == true) {%>
-                                <select name="published_status" style="background-color: rgb(243, 243, 243);" id="published_status" class="form-control">
-                                    <option selected value="true">فعال</option>
-                                    <option value="false">غیر فعال</option>                          
-                                  </select> 
-                            <%} else if(blog.published_status == false){%> 
-                                <select name="published_status" style="background-color: rgb(243, 243, 243);" id="published_status" class="form-control">
-                                    <option value="true">فعال</option>
-                                    <option selected value="false">غیر فعال</option>                          
-                                  </select> 
-                            <%}%>           
-                          </div>
-                        </div>
-
-                      <div class="form-group mb-2">
-                        <button type="submit" class="btn btn-primary" style="padding: 5px 20px; font-size: 0.85rem;">ثبت اطلاعات</button>
-                      </div>
-
-                    </div> <!-- /.col -->
+                      </div> <!-- .card -->
+                    </div>
                   </div>
-              </form>
-              
+
+                  <div class="form-group mb-3">
+                    <label for="blog_type_input" style="font-size: 0.9rem;">نوع پست</label>
+                    <%if(blog.blog_type=="text" ) {%>
+                      <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input"
+                        class="form-control col-sm-3">
+                        <option selected value="text">متن</option>
+                        <option value="podcast">پادکست</option>
+                        <option value="video">ویدئو</option>
+                      </select>
+                      <%} else if(blog.blog_type=="podcast" ){%>
+                        <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input"
+                          class="form-control col-sm-3">
+                          <option value="text">متن</option>
+                          <option selected value="podcast">پادکست</option>
+                          <option value="video">ویدئو</option>
+                        </select>
+                        <%} else if(blog.blog_type=="video" ){%>
+                          <select name="blog_type" style="background-color: rgb(243, 243, 243);" id="blog_type_input"
+                            class="form-control col-sm-3">
+                            <option value="text">متن</option>
+                            <option value="podcast">پادکست</option>
+                            <option selected value="video">ویدئو</option>
+                          </select>
+                          <%}%>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
+                    <%if(blog.title){%>
+                      <input type="text" name="title" id="titleinput" class="form-control"
+                        style="background-color: rgb(243, 243, 243);" placeholder="<%=blog.title%>">
+                      <%} else {%>
+                        <input type="text" name="title" id="titleinput" class="form-control"
+                          style="background-color: rgb(243, 243, 243);" placeholder="">
+                        <%}%>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="sluginput" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                    <%if(blog.slug) {%>
+                      <input type="text" id="sluginput" name="slug" class="form-control"
+                        style="background-color: rgb(243, 243, 243);" placeholder="<%=blog.slug%>">
+                      <%} else {%>
+                        <input type="text" id="sluginput" name="slug" class="form-control"
+                          style="background-color: rgb(243, 243, 243);" placeholder="">
+                        <%}%>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="blog_category_input" style="font-size: 0.9rem;">دسته بندی</label>
+                    <select name="blog_category_id" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
+                      class="form-control select2 col-sm-6" id="blog_category_input">
+                      <%if(blog.blog_category_id) {%>
+                        <option value="<%=blog.blog_category_id._id%>">
+                          <%=blog.blog_category_id.title%>
+                        </option>
+                        <%} else{%>
+                          <option></option>
+                          <%}%>
+                            <optgroup>
+                              <%blogCategory.forEach(item=> {%>
+                                <option value="<%=item._id%>">
+                                  <%=item.title%>
+                                </option>
+                                <%})%>
+                            </optgroup>
+                    </select>
+                    <div class="invalid-feedback"> Please select a valid state. </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="short_text_input">متن کوتاه</label>
+                    <div class="col-sm-12">
+                      <%if(blog.short_text){%>
+                        <textarea name="short_text" class="form-control"
+                          style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="short_text_input"
+                          rows="6" placeholder="<%=blog.short_text%>"></textarea>
+                        <%} else{%>
+                          <textarea name="short_text" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="short_text_input"
+                            rows="6" placeholder=""></textarea>
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="text">متن</label>
+                    <div class="col-sm-12">
+                      <%if(blog.text){%>
+                        <textarea name="text" placeholder="<%= blog.text%>" id="editor" rows="10" cols="80"
+                          style="height: 450px;"></textarea>
+                        <%} else{%>
+                          <textarea name="text" placeholder="" id="editor" rows="10" cols="80"></textarea>
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="tags_input">برچسب ها (با - جدا شود)</label>
+                    <div class="col-sm-12">
+                      <%if(blog.tags){%>
+                        <textarea name="tags" class="form-control"
+                          style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input" rows="6"
+                          placeholder="<%=blog.tags%>"></textarea>
+                        <%} else{%>
+                          <textarea name="tags" class="form-control"
+                            style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags_input" rows="6"
+                            placeholder=""></textarea>
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="published_time" style="font-size: 0.9rem;">زمان انتشار</label>
+                    <div class="col-sm-6">
+                      <%if(blog.published_time){%>
+                        <input name="published_time" style="background-color: rgb(243, 243, 243);"
+                          class="form-control sample-date-picker bg-white w-100 p-3"
+                          placeholder="<%=blog.published_time%>" type="text" id="published_time">
+                        <%} else{%>
+                          <input name="published_time" style="background-color: rgb(243, 243, 243);"
+                            class="form-control sample-date-picker bg-white w-100 p-3" placeholder="" type="text"
+                            id="published_time">
+
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="published_status" style="font-size: 0.9rem;">وضعیت انتشار</label>
+                    <div class="col-sm-3">
+                      <%if(blog.published_status==true) {%>
+                        <select name="published_status" style="background-color: rgb(243, 243, 243);"
+                          id="published_status" class="form-control">
+                          <option selected value="true">فعال</option>
+                          <option value="false">غیر فعال</option>
+                        </select>
+                        <%} else if(blog.published_status==false){%>
+                          <select name="published_status" style="background-color: rgb(243, 243, 243);"
+                            id="published_status" class="form-control">
+                            <option value="true">فعال</option>
+                            <option selected value="false">غیر فعال</option>
+                          </select>
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-2">
+                    <button onclick="doUpdateBlog('<%= blog.code%>')" class="btn btn-primary"
+                      style="padding: 5px 20px; font-size: 0.85rem;">به روز رسانی</button>
+                  </div>
+
+                </div> <!-- /.col -->
+              </div>
+            </form>
+
+            <%if(messages){%>
+              <div class="alert">
+                <strong style="color: rgb(51, 141, 56);">
+                  <%= messages?? "" %>
+                </strong>
+              </div>
+              <%}%>
+                <%if(errors){%>
+
+                  <div class="alert">
+                    <strong style="color: rgb(245, 39, 108);">
+                      <%= errors?? "" %>
+                    </strong>
+                  </div>
+                  <%}%>
 
 
-            </div>
-          </div> <!-- / .card -->
-        </div> <!-- .col-12 -->
-      </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-  </main> <!-- main -->
+
+          </div>
+        </div> <!-- / .card -->
+      </div> <!-- .col-12 -->
+    </div> <!-- .row -->
+  </div> <!-- .container-fluid -->
+</main> <!-- main -->
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    window.setTimeout(function () {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+        $(this).remove();
+      });
+    }, 2000);
+
+  });
+</script>
+<script>
+  ClassicEditor
+    .create(document.querySelector('#editor'), {
+      language: {
+        ui: 'en',
+        content: "fa"
+      },
+      image: {
+        toolbar: ['toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit']
+      }
+    })
+    .then(editor => {
+      console.log(editor);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>

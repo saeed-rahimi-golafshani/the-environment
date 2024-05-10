@@ -1,8 +1,9 @@
-const momentMJ = require("moment-jalali");
+const momentMJ = require("moment-jalaali");
 const { randomInt } = require("crypto");
 const path = require("path");
 const createHttpError = require("http-errors");
 const { PublicFunctionMessage } = require("./utills_message");
+const { unlink } = require("fs/promises")
 
 const getPersianDate = (date) => {
     persianMonths = [
@@ -30,13 +31,40 @@ const UniqueCode = async (Name, model) => {
     const code = Name + "-" + 1000 + randomInt(10000, 99999) + count;
     return code;
 };
+// Start Date and Time --------------------------------------------------------- 
+const getDateNow = () =>{
+    const date = new Date();
+    return date.getTime();
+}
 const convertGregorianDateToPersionDateToToday = () => {
     const date = new Date();
     return momentMJ(date).format("jYYYY-jMM-jDD HH:mm:ss");
 };
+const convertGetTimeToPersionDate = (date) => {
+    const time = new Date(date)
+    return momentMJ(time).format("jYYYY-jMM-jDD HH:mm:ss");
+};
+const convertOfPersionDateToGetTime = (jalaliDate) => {
+    const perDate =  momentMJ(jalaliDate, 'jYYYY-jMM-jDD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
+    const time = new Date(perDate);
+    console.log(time);
+    return time.getTime();
+};
+const convertDate = (date) => {
+    const [year, month, day] = date.split('/'); 
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate
+
+};
+
+// End Date and Time ---------------------------------------------------------------
+
+
 const copyObject = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
+
+// Start Image and File ---------------------------------------------------------------
 const listOfImageFromRequest = (files, fileUploadPath) => {
     if (files?.length > 0) {
         return files
@@ -78,22 +106,10 @@ const getFileSize = (files) => {
     const total = Math.ceil(sum);
     return total;
 };
-const extractTwoLinesDescription = (text) => {
-    let lines, firstTwoLines, firsOneLines;
-    lines = text.split("<p>");
-
-    if (lines.length >= 2) {
-        firstTwoLines = lines.slice(0, 2).join("\n").split("<p>");
-        return firstTwoLines;
-    } else {
-        firsOneLines = lines.slice(0, 1).join("\n").split("<p>");
-        return firsOneLines;
-    }
-};
 const deleteFileInPathArray = async (fileAddress) => {
     if (fileAddress) {
         const pathFile = fileAddress.map((item) =>
-            path.join(__dirname, "..", "..", "..", "Public", item)
+            path.join(__dirname, "..", "..", "..", "public", item)
         );
         const deleteFiles = async (paths) => {
             try {
@@ -107,6 +123,23 @@ const deleteFileInPathArray = async (fileAddress) => {
         deleteFiles(pathFile);
     }
 };
+
+// End Image and File ---------------------------------------------------------------
+
+const extractTwoLinesDescription = (text) => {
+    let lines, firstTwoLines, firsOneLines;
+    lines = text.split("<p>");
+
+    if (lines.length >= 2) {
+        firstTwoLines = lines.slice(0, 2).join("\n").split("<p>");
+        return firstTwoLines;
+    } else {
+        firsOneLines = lines.slice(0, 1).join("\n").split("<p>");
+        return firsOneLines;
+    }
+};
+
+
 const deleteInvalidPropertyObject = (data = {}, blackList = [] || []) => {
     const nullishData = ["", " ", 0, NaN, null, undefined];
     Object.keys(data).forEach((key) => {
@@ -146,5 +179,9 @@ module.exports = {
     deleteFileInPathArray,
     checkExistById,
     alreadyExistBySlug,
-    copyObject
+    copyObject,
+    convertDate,
+    convertGetTimeToPersionDate,
+    convertOfPersionDateToGetTime,
+    getDateNow
 };

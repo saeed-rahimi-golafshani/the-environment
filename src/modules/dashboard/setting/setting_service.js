@@ -87,7 +87,7 @@ class SettingsService {
             const fileName = getFileFilename(req.files['image']);
             const fileSize = getFileSize(req.files['image']);
             let updatedTime = convertGregorianDateToPersionDateToToday();
-            deleteFileInPathArray(fileId.files);
+            deleteFileInPathArray(fileId.cover)
             await this.#fileModel.updateOne({
                 _id: fileId._id
             },

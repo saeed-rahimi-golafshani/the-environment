@@ -1,163 +1,171 @@
 <main role="main" class="main-content">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12">
-            
-            <div class="row align-items-center mb-2">
-                <!-- داشبورد -->
-                <div class="col">
-                  <h2 class="h5 page-title">دسته بندی خبر</h2>
-                </div>              
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <div class="row align-items-center mb-2">
+          <!-- داشبورد -->
+          <div class="col">
+            <h2 class="h5 page-title">دسته بندی خبر</h2>
+          </div>
+        </div>
+
+        <div class="card-deck">
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <strong class="card-title">جستجو</strong>
+              <a href="/dashboard/news_category/add"
+                style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                <i class="fa fa-plus" style="margin: 5px;"></i>
+                افزودن</a>
+
             </div>
-          
-            <div class="card-deck">
-              <div class="card shadow mb-4">
-                <div class="card-header">
-                  <strong class="card-title">جستجو</strong>
-                  <a href="/dashboard/news_category/add" style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
-                    <i class="fa fa-plus" style="margin: 5px;"></i>
-                    افزودن</a>
 
+            <div class="card-body">
+              <form action="/dashboard/news_category" method="get">
+
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="search" style="font-size: 0.9rem">عبارات جستجو</label>
+                    <input id="searchInput" type="text" class="form-control" name="search" value="">
+                  </div>
                 </div>
-                
-                <div class="card-body">
-                  <form action="/panel/product_category" method="get" >
 
-                    <div class="form-row">
-                      <div class="form-group col-md-4">
-                        <label for="search" style="font-size: 0.9rem">عبارات جستجو</label>
-                        <input id="searchInput" type="text" class="form-control" name="search" value="">
-                      </div> 
-                    </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="inputParent" style="font-size: 0.9rem">دسته بندی والد</label>
+                    <div class="col-sm-9">
+                      <select name="parent" style="font-size: 0.75rem;" class="form-control select2" id="inputParent">
+                        <%newsCategory.forEach(item=> {%>
+                          <%if(item.parent) {%>
+                            <option value="<%=item.parent._id%>">
+                              <%= item.parent.title%>
+                            </option>
+                            <%} else{%>
+                              <option></option>
+                              <%}%>
+                                <%})%>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="inputParent" style="font-size: 0.9rem">دسته بندی والد</label>
-                            <div class="col-sm-9">
-                              
-                                <select name="parent" style="font-size: 0.75rem;" class="form-control select2" id="inputParent">       
-
-                                 
-                                   
-                                      <option value=""></option>  
-                                 
-                                      <option></option>  
-                                 
-                             
                                   <optgroup>
-                                      <option value=""></option>
+                                    <option value=""></option>
                                   </optgroup>
-                                </select>
+                      </select>
 
-                                <div class="invalid-feedback"> Please select a valid state. </div>
-                              </div>
-                          </div> 
-                        </div>                                           
-                    <button type="submit" onclick="searchBlogCatFunction()" class="btn btn-primary">جستجو</button>
-
-                  </form>
-                </div>
-              </div>       
-            </div> 
-         
-              <div class="row">
-                <div class="col-md-12 my-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <div class="toolbar">
-                        <div class="card-header">
-                            <strong class="card-title" style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد نتایج :  </strong>
-                        </div>
-                      </div>
-                        <table id="blogCategoryTable" class="table table-borderless table-hover">
-                          <thead>
-                            <tr style="font-size: 0.85rem;">
-                              <th>کد</th>
-                              <th>عنوان</th>
-                              <th>والد</th>
-                              <th>تعداد</th>
-                              <th>نمایش در آرشیو</th>
-                              <th>دسته بندی پیش فرض</th>
-                              <th>مدیریت</th>                              
-                            </tr>
-                          </thead>  
-                       
-                            <tbody>
-                              <tr>
-                                <tr style="font-size: 0.85rem;">
-                                    <td></td>
-                                    <td></td>
-                                   
-                                      <td></td>  
-                                  
-                                      <td> - </td>
-                                
-                                    <td> _ </td>                
-                                  
-                                      <td><span class="badge badge-pill badge-success" style="padding: 10px 8px; border-radius: 10px; background-color: rgb(111, 250, 204);">فعال</span></td>   
-                                 
-                                      <td><span class="badge badge-pill badge-danger" style="padding: 10px 8px; border-radius: 10px; background-color: rgb(255, 98, 59);">غیر فعال</span></td>                              
-                              
-                                                                      
-                                  
-                                      <td><span class="badge badge-pill badge-success" style="padding: 10px 8px; border-radius: 10px; background-color: rgb(111, 250, 204);">فعال</span></td>                              
-                                
-                                      <td><span class="badge badge-pill badge-danger" style="padding: 5px 10px; border-radius: 10px; background-color:  rgb(255, 98, 59);">غیر فعال</span></td>                              
-                                                                                       
-                                    <td>
-                                      <a href="/panel/product_category/id/" style="color: rgba(169, 172, 1, 0.863); margin: 10px; "><i class="fa fa-edit"></i></a>
-                                      <a href="/panel/user/id/" style="color: rgba(0, 108, 14, 0.865); margin: 5px;"><i class="far fa-eye"></i></a>
-                                      <a href="" data-toggle="modal" data-target="#verticalModal" style="color: rgba(228, 2, 2, 0.865);margin: 5px;"><i class="fa fa-remove"></i></a>
-                                    </td>
-                                </tr>   
-                              </tr>
-                            </tbody> 
-                              <!-- Modal -->
-                              <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-                              
-                                  <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="verticalModalTitle">حذف دسته بندی بلاگ</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body"> آیا از حذف دسته بندی بلاگ مطمئن هستید؟ </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">خیر</button>
-                                        <button type="button" onclick="" class="btn mb-2 btn-primary"> بلی</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                              </div>
-                           
-                               
-
-                        </table>  
-                       
-                        <nav aria-label="Table Paging" class="mb-0 text-muted" style="font-size: 0.7rem;">
-                          <ul class="pagination justify-content-center mb-0">
-                            <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
-                          </ul>
-                        </nav>
+                      <div class="invalid-feedback"> Please select a valid state. </div>
                     </div>
                   </div>
-                </div> <!-- customized table -->
-            </div> 
-          
-                <div class="col-12 text-center mb-4">
-                  <i class="fas fa-exclamation-triangle" style="font-size: 72px; margin-bottom: 20px;"></i>    
-                <!-- <img src="./assets/images/logo.svg" class="navbar-brand-img brand-sm mx-auto mb-4" alt="..."> -->
-                <h4>نتیجه ای یافت نشد</h4>
+                </div>
+                <button type="submit" onclick="searchBlogCatFunction()" class="btn btn-primary">جستجو</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <%if(showTable==true){%>
+        <div class="row">
+          <div class="col-md-12 my-4">
+            <div class="card shadow">
+              <div class="card-body">
+                <div class="toolbar">
+                  <div class="card-header">
+                    <strong class="card-title" style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد
+                      نتایج : </strong>
+                  </div>
+                </div>
+                <table id="blogCategoryTable" class="table table-borderless table-hover">
+                  <thead>
+                    <tr style="font-size: 0.85rem;">
+                      <th>کد</th>
+                      <th>عنوان</th>
+                      <th>والد</th>
+                      <th>نمایش در آرشیو</th>
+                      <th>دسته بندی پیش فرض</th>
+                      <th>مدیریت</th>
+                    </tr>
+                  </thead>
+                  <%listOfNewsCategory.forEach(item=>{%>
+                  <tbody>
+                    <tr>
+                    <tr style="font-size: 0.85rem;">
+                      <td><%=item.code%></td>
+                      <td><%=item.title%></td>
+                      <%if(item.parent) {%>
+                        <td><%=item.parent.title%></td>                                        
+                        <%} else{%>
+                          <td> - </td>
+                        <%}%>
+
+                        <%if(item.show_in_archive == true) {%>
+                          <td><span class="badge badge-pill badge-success" style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>                              
+                        <%} else{%>
+                          <td><span class="badge badge-pill badge-danger" style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>                              
+                        <%}%>
+
+                        <%if(item.priority == true) {%>
+                          <td><span class="badge badge-pill badge-success" style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>                              
+                        <%} else{%>
+                          <td><span class="badge badge-pill badge-danger" style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>                              
+                        <%}%> 
+
+                      <td>
+                        <a href="/dashboard/news_category/update/<%= item.code%>" style="color: rgba(169, 172, 1, 0.863); margin: 10px; "><i
+                            class="fa fa-edit"></i></a>
+                        <a href="/panel/user/id/" style="color: rgba(0, 108, 14, 0.865); margin: 5px;"><i
+                            class="far fa-eye"></i></a>
+                        <a href="" data-toggle="modal" data-target="#verticalModal"
+                          style="color: rgba(228, 2, 2, 0.865);margin: 5px;"><i class="fa fa-remove"></i></a>
+                      </td>
+                    </tr>
+                    </tr>
+                  </tbody>
+                  <%})%>
+                  <!-- Modal -->
+                  <!-- <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog"
+                    aria-labelledby="verticalModalTitle" aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="verticalModalTitle">حذف دسته بندی بلاگ</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"> آیا از حذف دسته بندی بلاگ مطمئن هستید؟ </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">خیر</button>
+                          <button type="button" onclick="" class="btn mb-2 btn-primary"> بلی</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+
+
+                </table>
+
+                <nav aria-label="Table Paging" class="mb-0 text-muted" style="font-size: 0.7rem;">
+                  <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+                  </ul>
+                </nav>
               </div>
-            
-             
-        </div> 
-      </div> 
+            </div>
+          </div> <!-- customized table -->
+        </div>
+        <%} else {%>
+        <div class="col-12 text-center mb-4">
+          <i class="fas fa-exclamation-triangle" style="font-size: 72px; margin-bottom: 20px;"></i>
+          <!-- <img src="./assets/images/logo.svg" class="navbar-brand-img brand-sm mx-auto mb-4" alt="..."> -->
+          <h4>نتیجه ای یافت نشد</h4>
+        </div>
+
+        <%}%>
+      </div>
     </div>
-</main> 
+  </div>
+</main>
