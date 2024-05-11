@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+   
+
+<head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" href="website/images/favicon.png">
+      <%if(setting){%> 
+        <title><%= setting.title%></title>
+        <%} else if(setting == null){%> 
+            <title>وب سایت اکو سیستم</title>
+            <%}%>
+      
+      <!-- CSS FILES START -->
+      <link href="website/css/custom.css" rel="stylesheet">
+      <link href="website/css/color.css" rel="stylesheet">
+      <link href="website/css/responsive.css" rel="stylesheet">
+      <link href="website/css/owl.carousel.min.css" rel="stylesheet">
+      <link href="website/css/bootstrap.min.css" rel="stylesheet">
+      <link href="website/css/prettyPhoto.css" rel="stylesheet">
+      <link href="website/css/all.min.css" rel="stylesheet">
+      <!-- CSS FILES End -->
+   </head>
+  
+   <body class="login-page">
+
+         <%-body%>
+         
+         <script src="website/js/jquery-migrate-1.4.1.min.js"></script> 
+         <script src="website/js/popper.min.js"></script> 
+         <script src="website/js/jquery-3.3.1.min.js"></script> 
+         <script src="website/js/bootstrap.min.js"></script> 
+         <script src="website/js/jquery.plugin.min.js"></script> 
+         <script src="website/js/custom.js"></script>
+   </body>
+
+</html>
+
+

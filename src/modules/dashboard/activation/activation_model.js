@@ -6,7 +6,6 @@ const OTPSchema = new Schema({
 });
 
 const ActivationSchema = new Schema({
-    activation_code: {type: String, required: true, unique: true},
     user_Id: {type: Types.ObjectId, ref: "user"},
     otp: {type: OTPSchema},
     type: {type: String, default: "mobile"},

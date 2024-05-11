@@ -1,0 +1,36 @@
+ 
+ <section class="wf100 p80">
+    <div class="container">
+       <div class="row">
+          <div class="col-lg-5 col-md-4 col-10 mx-auto text-center">
+             <div class="login-box">
+                <h4><a href="/">Eco System</a></h4>
+                <h5>ورود | ثبت نام</h5>
+                <form>
+                    <div class="welcome">
+                        <p>سلام!</p>
+                        <p>لطفا شماره تلفن همراه خود را وارد نمایید</p>
+                    </div>
+                    
+                   <div class="input-group">
+                      <input type="text" name="mobile" class="form-control">
+                   </div>
+                   <div>
+                     <%if(messages || errors){%>
+                    <p style="font-size: 0.85rem; color: #66bb6a;">لطفا این قسمت را خالی نگذارید !!</p>
+                    <%} else{%> 
+                     <p style="font-size: 0.85rem; color: #66bb6a;">لطفا این قسمت را خالی نگذارید !!</p>
+                     <%}%>
+                   </div>
+                   <div class="input-group">
+                      <button class="login-btn">ورود</button>
+                      <p>ورود شما به معنای پذیرش <span><a href="">شرایط اکو سیستم</a></span> و <span><a href="">قوانین حریم‌ خصوصی</a></span> است</p>
+                   </div>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+
+

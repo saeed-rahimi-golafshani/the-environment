@@ -5,7 +5,6 @@ const { CODE_NAME } = require("../../../common/utills/constrant");
 const {
     UniqueCode,
     convertGregorianDateToPersionDateToToday,
-    convertOfPersionDateToGetTime,
 } = require("../../../common/utills/public.function");
 const blogModel = require("./blog_model");
 const blogMessage = require("./blog.messages");
