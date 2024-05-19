@@ -1,36 +1,41 @@
- 
- <section class="wf100 p80">
-    <div class="container">
-       <div class="row">
-          <div class="col-lg-5 col-md-4 col-10 mx-auto text-center">
-             <div class="login-box">
-                <h4><a href="/">Eco System</a></h4>
-                <h5>ورود | ثبت نام</h5>
-                <form>
-                    <div class="welcome">
-                        <p>سلام!</p>
-                        <p>لطفا شماره تلفن همراه خود را وارد نمایید</p>
-                    </div>
-                    
-                   <div class="input-group">
-                      <input type="text" name="mobile" class="form-control">
-                   </div>
-                   <div>
-                     <%if(messages || errors){%>
-                    <p style="font-size: 0.85rem; color: #66bb6a;">لطفا این قسمت را خالی نگذارید !!</p>
-                    <%} else{%> 
-                     <p style="font-size: 0.85rem; color: #66bb6a;">لطفا این قسمت را خالی نگذارید !!</p>
-                     <%}%>
-                   </div>
-                   <div class="input-group">
-                      <button class="login-btn">ورود</button>
-                      <p>ورود شما به معنای پذیرش <span><a href="">شرایط اکو سیستم</a></span> و <span><a href="">قوانین حریم‌ خصوصی</a></span> است</p>
-                   </div>
-                </form>
-             </div>
-          </div>
-       </div>
-    </div>
- </section>
+<section class="wf100 p80">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-5 col-md-4 col-10 mx-auto text-center">
+            <div class="login-box">
+               <h4><a href="/">Eco System</a></h4>
+               <h6>کد تایید را وارد کنید</h6>
+               <form id="frm_login">
+                  <div class="welcome">
+                     <p>کد تایید برای شماره ---- پیامک شد</p>
+                  </div>
+                  
+                  <div class="input-group">
+                     <input type="text" name="mobile" class="form-control" placeholder="موبایل ...">
+                  </div>
+                  <div class="input-group">
+                     <input type="text" name="code" class="form-control" placeholder="کد تایید ...">
+                  </div>
+                  <div>
+                     <%if(errors){%>
+                        <p style="font-size: 0.85rem; color: rgb(243, 68, 68);" id="error_message">
+                           <%= errors%>
+                        </p>
+                        <%}%>
+                  </div>
+                  <div>
 
+                     <p  style="font-size: 0.85rem; text-align: center;" id="timer">مانده تا دریافت مجدد کد 
+                     </p>
+
+                  </div>
+                  <div class="input-group">
+                     <button onclick="login()" class="login-btn">تایید</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
 

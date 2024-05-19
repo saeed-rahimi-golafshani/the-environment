@@ -103,7 +103,7 @@ class BlogService {
         const blackListFeilds = Object.values(BLOG_BLACKLIST);
         deleteInvalidPropertyObject(requestBody, blackListFeilds);
         if (requestBody.published_status == true) {
-            requestBody.published_status == true;
+            requestBody.published_status = true;
         } else if (requestBody.published_status == false) {
             requestBody.published_status = false;
         }

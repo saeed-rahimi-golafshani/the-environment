@@ -1,12 +1,12 @@
-const { default: mongoose } = require("mongoose");
+const { Schema, Types, model } = require("mongoose");
 
-const RolePermissionSchema = new mongoose.Schema({
-  role_Id: {type: mongoose.Types.ObjectId, ref: "role", required: true},
-  permission_Id: {type: mongoose.Types.ObjectId, ref: "permission", required: true},
+const RolePermissionSchema = new Schema({
+  code: {type: String, unique: true},
+  role_id: {type: Types.ObjectId, ref: "role", required: true},
+  permission_id: {type: Types.ObjectId, ref: "permission", required: true},
   createAt: {type: String, required: true, default: ""},
   updateAt: {type: String, default: ""},
 });
 
-module.exports = {
-  RolePermissionModel: mongoose.model("role_permission", RolePermissionSchema)
-};
+const RolePermissionModel = model("role_permission", RolePermissionSchema)
+module.exports = RolePermissionModel

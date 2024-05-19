@@ -1,6 +1,6 @@
 const AuthMessage = Object.freeze({
     mobileValidation: "شماره موبایل نادرست است",
-    codeValidation: "کد تایید اشتباه است",
+    codeValidation: "ساختار کد تایید اشتباه است",
     OtpCodeNotExpired: "کد فعالسازی منقضی نشده است، لطفا چند دقیقه بعد تلاش کنید",
     sendOtpSuccessfuly: "کد فعالسازی با موفقیت ارسال شد",
     otpCodeExpired: "کد فعالسازی منقضی شده است",

@@ -3,7 +3,7 @@ const { randomInt } = require("crypto");
 const path = require("path");
 const createHttpError = require("http-errors");
 const { PublicFunctionMessage } = require("./utills_message");
-const { unlink } = require("fs/promises")
+const { unlink } = require("fs/promises");
 
 const getPersianDate = (date) => {
     persianMonths = [
@@ -31,34 +31,34 @@ const UniqueCode = async (Name, model) => {
     const code = Name + "-" + 1000 + randomInt(10000, 99999) + count;
     return code;
 };
-// Start Date and Time --------------------------------------------------------- 
-const getDateNow = () =>{
+// Start Date and Time ---------------------------------------------------------
+const getDateNow = () => {
     const date = new Date();
     return date.getTime();
-}
+};
 const convertGregorianDateToPersionDateToToday = () => {
     const date = new Date();
     return momentMJ(date).format("jYYYY-jMM-jDD HH:mm:ss");
 };
 const convertGetTimeToPersionDate = (date) => {
-    const time = new Date(date)
+    const time = new Date(date);
     return momentMJ(time).format("jYYYY-jMM-jDD HH:mm:ss");
 };
 const convertOfPersionDateToGetTime = (jalaliDate) => {
-    const perDate =  momentMJ(jalaliDate, 'jYYYY-jMM-jDD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
+    const perDate = momentMJ(jalaliDate, "jYYYY-jMM-jDD HH:mm:ss").format(
+        "YYYY-MM-DD HH:mm:ss"
+    );
     const time = new Date(perDate);
     console.log(time);
     return time.getTime();
 };
 const convertDate = (date) => {
-    const [year, month, day] = date.split('/'); 
+    const [year, month, day] = date.split("/");
     const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate
-
+    return formattedDate;
 };
 
 // End Date and Time ---------------------------------------------------------------
-
 
 const copyObject = (obj) => {
     return JSON.parse(JSON.stringify(obj));
@@ -139,7 +139,6 @@ const extractTwoLinesDescription = (text) => {
     }
 };
 
-
 const deleteInvalidPropertyObject = (data = {}, blackList = [] || []) => {
     const nullishData = ["", " ", 0, NaN, null, undefined];
     Object.keys(data).forEach((key) => {
@@ -164,6 +163,7 @@ const alreadyExistBySlug = async (slug, model) => {
         throw new createHttpError.Conflict(PublicFunctionMessage.alreadySlug);
     return null;
 };
+
 module.exports = {
     getPersianDate,
     deleteInvalidPropertyObject,

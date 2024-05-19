@@ -9,7 +9,7 @@ const router = Router();
 router.use("/", HomeRoutes);
 router.use("/dashboard", DashboardRoutes);
 router.use("/blogs", BlogArchiveRoutes);
-router.use("/login", LoginRoutes);
+router.use("/users", LoginRoutes);
 module.exports = {
     mainRoutes: router
 }

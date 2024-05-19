@@ -1,15 +1,16 @@
-const { default: mongoose } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const PermissionSchema = new mongoose.Schema({
+const PermissionSchema = new Schema({
+    code: {type: String, unique: true},
     title: {type: String, required: true},
     slug: {type: String, required: true},
     description: {type: String},
-    active: {type: Boolean, required: true}, // 1 => true, 0 => false
+    status: {type: Boolean, required: true}, // 1 => true, 0 => false
     createAt: {type: String, required: true, default: ""},
     updateAt: {type: String, default: ""},
     content: {type: String}
 });
+PermissionSchema.index({title: "text", slug: "text"})
 
-module.exports = {
-    PermissionModel: mongoose.model("permission", PermissionSchema)
-}
+const PermissionModel = model("permission", PermissionSchema);
+module.exports = PermissionModel

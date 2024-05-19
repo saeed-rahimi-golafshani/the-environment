@@ -8,6 +8,9 @@ module.exports = {
         MALE: "male",
         FEMALE:  "female"
     }),
+    USER_DEFAULT_ROLE: Object.freeze({
+        USER: "USER"
+    }),
     USER_STATUS: Object.freeze({
         ACTIVE: true,
         UNACTIVE: false,
@@ -19,8 +22,11 @@ module.exports = {
         NEWS_CATEGORY: "NEWS_CAT",
         NEWS: "NEWS",
         ORGGANIZATION: "ORG",
-
         USER: "U",
+        ROLE: "R",
+        PERMISSION: "PER",
+        ROLEPERMISSION: "R_PER",
+
         PRODUCT: "PRD",
         PRODUCT_CATEGORY: "CAT_PRD",
         BRAND: "BR",
@@ -49,6 +55,21 @@ module.exports = {
         CODE: "code",
         CREATEDAT: "createdAt",
         UPDATEDAT: "updatedAt"
+    }),
+    ROLE_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEAT: "createAt",
+        UPDATEAT: "updateAt"
+    }),
+    PERMISSION_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEAT: "createAt",
+        UPDATEAT: "updateAt"
+    }),
+    ROLEPERMISSION_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEAT: "createAt",
+        UPDATEAT: "updateAt"
     }),
     NEWSCATEGORY_BLACKLIST: Object.freeze({
         CODE: "code",

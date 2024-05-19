@@ -1,0 +1,126 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <strong class="card-title">افزودن نقش</strong>
+                        <a href="/dashboard/permission"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-sign-out" style="margin: 5px;"></i>
+                            بازگشت</a>
+                        <a href="/dashboard/permission/add"
+                            style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                            <i class="fa fa-plus" style="margin: 5px;"></i>
+                            افزودن</a>
+                    </div>
+                    <div class="card-body">
+                        <form id="frm_craetePermission">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <input type="text" name="code" id="code" value="<%= code%>" hidden> 
+
+                                    <div class="form-group mb-3">
+                                        <label for="title" style="font-size: 0.9rem;">عنوان</label>
+                                        <input type="text" name="title" id="title" class="form-control"
+                                            style="background-color: rgb(243, 243, 243);" required>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="slug" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                                        <input type="text" id="slug" name="slug" class="form-control"
+                                            style="background-color: rgb(243, 243, 243);" placeholder="" required>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label style="font-size: 0.9rem;" for="text">توضیحات</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="description" class="form-control"
+                                                style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                                                id="description" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label style="font-size: 0.9rem;" for="content">محتوا</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="content" class="form-control"
+                                                style="font-size: 0.8rem; background-color: rgb(243, 243, 243);"
+                                                id="content" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="status" style="font-size: 0.9rem;">وضعیت</label>
+                                        <div class="col-sm-3">
+                                            <select name="status" style="background-color: rgb(243, 243, 243);"
+                                                id="status" class="form-control">
+                                                <option selected value="true">فعال</option>
+                                                <option value="false">غیر فعال</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <button onclick="doSavePermission()" class="btn btn-primary"
+                                            style="padding: 5px 20px; font-size: 0.85rem;">ثبت اطلاعات</button>
+                                    </div>
+
+                                </div> <!-- /.col -->
+                            </div>
+                        </form>
+
+                        <%if(messages){%>
+                            <div class="alert">
+                                <strong style="color: rgb(51, 141, 56);">
+                                    <%= messages?? "" %>
+                                </strong>
+                            </div>
+                            <%}%>
+                                <%if(errors){%>
+
+                                    <div class="alert">
+                                        <strong style="color: rgb(245, 39, 108);">
+                                            <%= errors?? "" %>
+                                        </strong>
+                                    </div>
+                                    <%}%>
+                    </div>
+                </div> <!-- / .card -->
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</main> <!-- main -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        window.setTimeout(function () {
+            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+                $(this).remove();
+            });
+        }, 2000);
+
+    });
+</script>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            language: {
+                ui: 'en',
+                content: "fa"
+            },
+            image: {
+                toolbar: ['toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit']
+            }
+        })
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>

@@ -328,31 +328,7 @@
       gtag('config', 'UA-56159088-1');
     </script>
    
-    <script>
-    function searchFunction() {
-      let inputSearch, inputStatus, inputGender, table, tr, td, i, txtValue, filterSaerch, filterStatus, filterGender, code, name, date, status, view;
-      inputSearch = document.getElementById("searchInput").value.toUpperCase();
-      inputStatus = document.getElementById("statusInput").value.toUpperCase();
-      inputGender = document.getElementById("genderInput").value.toUpperCase();
-      filterSaerch = inputSearch.value.toUpperCase();
-      filterStatus = inputStatus.value.toUpperCase();
-      filterGender = inputGender.value.toUpperCase();
-      table = document.getElementById("userTable");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filterSaerch) > -1 || txtValue.toUpperCase().indexOf(filterStatus) > -1 || txtValue.toUpperCase().indexOf(filterGender) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
     
-   </script>
 
 <script>
   function searchBlogCatFunction() {
@@ -403,6 +379,7 @@
       });
     });
   </script>
+  
 
 <%-script%>
   

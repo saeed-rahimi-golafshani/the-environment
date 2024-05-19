@@ -1,0 +1,127 @@
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <div class="row align-items-center mb-2">
+          <!-- داشبورد -->
+          <div class="col">
+            <h2 class="h5 page-title">کاربران</h2>
+          </div>
+        </div>
+
+        <div class="card-deck">
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <strong class="card-title">جستجو</strong>
+            </div>
+            <div class="card-body">
+
+              <form action="/dashboard/users" method="get">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="search">کد کاربر یا نام و نام خانوادگی یا تلفن یا ایمیل</label>
+                    <input name="search" id="searchInput" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="statusInput">وضعیت</label>
+                    <select name="status" id="statusInput" class="form-control">
+                      <option selected value="">همه</option>
+                      <option value="true">فعال</option>
+                      <option value="false">غیر فعال</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="genderInput">جنسیت</label>
+                    <select name="gender" id="genderInput" class="form-control">
+                      <option selected value="">همه</option>
+                      <option value="unknown">نامشخص</option>
+                      <option value="male">مرد</option>
+                      <option value="female">زن</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" onclick="searchListOfUser()" class="btn btn-primary">جستجو</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+        <%if(showTable == true){%>
+          <div class="row">
+            <div class="col-md-12 my-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="toolbar">
+                    <div class="card-header">
+                      <strong class="card-title" style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد
+                        نتایج : <%= userCount%></strong>
+                    </div>
+                  </div>
+                  <table id="userTable" class="table table-borderless table-hover">
+                    <thead>
+                      <tr>
+                        <th>کد</th>
+                        <th>نام</th>
+                        <th>تاریخ عضویت</th>
+                        <th>وضعیت</th>
+                        <th>مشاهده</th>
+                      </tr>
+                    </thead>
+                    <%users.forEach(user=> {%>
+                      <tbody>
+                        <tr>
+                        <tr style="font-size: 0.85rem;">
+                          <td>
+                            <%=user.code%>
+                          </td>
+                          <td>
+                            <%=user.name%>
+                          </td>
+                          <td>
+                            <%=user.createdAt%>
+                          </td>
+                          <%if(user.access_profile==true){%>
+                            <td><span class="badge badge-pill badge-success"
+                                style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>
+                            <%} else{%>
+                              <td><span class="badge badge-pill badge-danger"
+                                  style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>
+                              <%}%>
+                                <td>
+                                  <a href="/dashboard/users/edit/<%=user.code%>"
+                                    class=" btn mb-2 btn-outline-success"><i class="fa fa-edit"></i></a>
+                                </td>
+                        </tr>
+                        </tr>
+                      </tbody>
+                      <%})%>
+                  </table>
+                  <nav aria-label="Table Paging" class="mb-0 text-muted" style="font-size: 0.7rem;">
+                    <ul class="pagination justify-content-center mb-0">
+                      <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div> <!-- customized table -->
+          </div>
+          <%}else{%>
+            <div class="col-12 text-center mb-4">
+              <i class="fas fa-exclamation-triangle" style="font-size: 72px; margin-bottom: 20px;"></i>
+              <h4>نتیجه ای یافت نشد</h4>
+            </div>
+            <%}%>
+
+      </div>
+    </div>
+  </div>
+</main>

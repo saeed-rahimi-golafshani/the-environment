@@ -2,7 +2,7 @@
     <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
       <i class="fe fe-x"><span class="sr-only"></span></i>
     </a>
-    <nav class="vertnav navbar navbar-light">
+    <nav class="vertnav navbar navbar-light" style="font-size: 1rem;">
       <!-- nav bar -->
       <div class="w-100 mb-4 d-flex">
         <% if(setting == null){%> 
@@ -32,10 +32,9 @@
           <span>اپلیکیشن</span>
         </p>
         <li class="nav-item w-100">
-          <a class="nav-link" href="/panel/user/">
+          <a class="nav-link" href="/dashboard/users">
             <i class="fas fa-users fe-16"></i>
             <span class="ml-3 item-text">کاربران</span>
-            <!-- <span class="badge badge-pill badge-primary">New</span> -->
           </a>
         </li>
         <li class="nav-item dropdown">
@@ -201,7 +200,6 @@
           </a>
           <ul class="collapse list-unstyled pl-4 w-100" id="operator">
             <a class="nav-link pl-3" href="./contacts-list.html" style="font-size: 0.8rem;"><span class="ml-1">اپراتور ها</span></a>
-            <a class="nav-link pl-3" href="./contacts-grid.html" style="font-size: 0.8rem;"><span class="ml-1">واحد های پشتیبانی</span></a>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -224,6 +222,9 @@
           <ul class="collapse list-unstyled pl-4 w-100" id="setting">
             <a class="nav-link pl-3" href="./contacts-list.html" style="font-size: 0.8rem;"><span class="ml-1">تنظیمات اصلی</span></a>
             <a class="nav-link pl-3" href="./contacts-grid.html" style="font-size: 0.8rem;"><span class="ml-1">هزینه ارسال</span></a>
+            <a class="nav-link pl-3" href="/dashboard/role" style="font-size: 0.8rem;"><span class="ml-1">ثبت نقش کاربری</span></a>
+            <a class="nav-link pl-3" href="/dashboard/permission" style="font-size: 0.8rem;"><span class="ml-1">ثبت مجوز</span></a>
+            <a class="nav-link pl-3" href="/dashboard/role_permission" style="font-size: 0.8rem;"><span class="ml-1"> ثبت نقش مجوز کاربری</span></a>
           </ul>
         </li>
         <li class="nav-item w-100">
