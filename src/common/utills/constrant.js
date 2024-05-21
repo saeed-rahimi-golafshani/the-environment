@@ -26,6 +26,7 @@ module.exports = {
         ROLE: "R",
         PERMISSION: "PER",
         ROLEPERMISSION: "R_PER",
+        OPERATOR: "OPET",
 
         PRODUCT: "PRD",
         PRODUCT_CATEGORY: "CAT_PRD",

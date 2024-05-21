@@ -1,0 +1,197 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+                <div class="row align-items-center mb-2">
+                    <!-- داشبورد -->
+                    <div class="col">
+                        <h2 class="h5 page-title">اپراتورها</h2>
+                    </div>
+                </div>
+
+                <div class="card-deck">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">جستجو</strong>
+                            <a href="/dashboard/operator/add"
+                                style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                                <i class="fa fa-plus" style="margin: 5px;"></i>
+                                افزودن</a>
+
+                        </div>
+
+                        <div class="card-body">
+                            <form action="/dashboard/operator" method="get">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="role" style="font-size: 0.9rem">جستجو بر اساس نقش</label>
+                                        <div class="col-sm-9">
+                                            <select name="role" style="font-size: 0.75rem;" class="form-control select2"
+                                                id="role">
+                                                <option value=""></option>
+                                                <optgroup>
+                                                    <%roles.forEach(item=> {%>
+                                                        <option value="<%=item.code%>">
+                                                            <%=item.title%>
+                                                        </option>
+                                                        <%})%>
+                                                </optgroup>
+                                            </select>
+                                            <div class="invalid-feedback"> Please select a valid state. </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="user" style="font-size: 0.9rem">جستجو بر اساس مجوز</label>
+                                        <div class="col-sm-9">
+                                            <select name="user" style="font-size: 0.75rem;"
+                                                class="form-control select2" id="user">
+                                                <option value=""></option>
+                                                <optgroup>
+                                                    <%users.forEach(item=> {%>
+                                                        <%if(item.title){%> 
+                                                            <option value="<%=item.code%>">
+                                                                <%=item.title%>
+                                                            </option>
+                                                            <%} else if(item.mobile && item.access_profile == true){%> 
+                                                                <option value="<%=item.code%>">
+                                                                    <%=item.mobile%>
+                                                                </option>
+                                                                <%}%>
+                                                        
+                                                        <%})%>
+                                                </optgroup>
+                                            </select>
+                                            <div class="invalid-feedback"> Please select a valid state. </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" onclick="searchOperatorFunction()"
+                                    class="btn btn-primary">جستجو</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <%if(showTable==true){%>
+                    <div class="row">
+                        <div class="col-md-12 my-4">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <div class="toolbar">
+                                        <div class="card-header">
+                                            <strong class="card-title"
+                                                style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد
+                                                نتایج : <%= operatorCount%></strong>
+                                        </div>
+                                    </div>
+
+                                    <table id="operatorTable" class="table table-borderless table-hover">
+                                        <thead>
+                                            <tr style="font-size: 0.85rem;">
+                                                <th>کد</th>
+                                                <th>کاربر</th>
+                                                <th>نقش</th>
+                                                <th>وضعیت</th>
+                                                <th>مدیریت</th>
+                                            </tr>
+                                        </thead>
+                                        <% operator.forEach(item=> {%>
+                                            <tbody>
+                                                <tr>
+                                                <tr style="font-size: 0.85rem;">
+                                                    <td>
+                                                        <%= item.code%>
+                                                    </td>
+                                                    <%if(item.user_id.title){%> 
+                                                        <td>
+                                                            <%= item.user_id.title%>
+                                                        </td>
+                                                        <%} else if(item.user_id.mobile){%> 
+                                                            <td>
+                                                                <%= item.user_id.mobile%>
+                                                            </td>
+                                                            <%}%>
+                                                    
+                                                    <td>
+                                                        <%= item.role_id.title%>
+                                                    </td>
+                                                    <%if(item.status == true) {%>
+                                                        <td><span class="badge badge-pill badge-success"
+                                                            style="padding: 5px 10px; border-radius: 10px;">فعال</span></td>
+                                                            <%} else{%>
+                                                        <td><span class="badge badge-pill badge-danger"
+                                                            style="padding: 5px 10px; border-radius: 10px;">غیر فعال</span></td>
+                                                            <%}%> 
+                                                    <td>
+                                                        <a href="/dashboard/operator/edit/<%= item.code%>"
+                                                            class="btn mb-2 btn-outline-success"><i
+                                                                class="fa fa-edit"></i></a>
+                                                        <a href="" data-toggle="modal" data-target="#verticalModal"
+                                                            class="btn mb-2 btn-outline-success"><i
+                                                                class="fas fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                </tr>
+                                            </tbody>
+                                            <%})%>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="verticalModalTitle" aria-hidden="true">
+
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="verticalModalTitle">حذف دسته
+                                                                    بندی
+                                                                    بلاگ</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body"> آیا از حذف دسته بندی بلاگ مطمئن
+                                                                هستید؟
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn mb-2 btn-secondary"
+                                                                    data-dismiss="modal">خیر</button>
+                                                                <button type="button" onclick=""
+                                                                    class="btn mb-2 btn-primary">
+                                                                    بلی</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                    </table>
+                                    <nav aria-label="Table Paging" class="mb-0 text-muted" style="font-size: 0.7rem;">
+                                        <ul class="pagination justify-content-center mb-0">
+                                            <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div> <!-- customized table -->
+                    </div>
+                    <%}else{%>  
+                        <div class="col-12 text-center mb-4">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 72px; margin-bottom: 20px;"></i>
+                            <!-- <img src="./assets/images/logo.svg" class="navbar-brand-img brand-sm mx-auto mb-4" alt="..."> -->
+                            <h4>نتیجه ای یافت نشد</h4>
+                        </div>
+                        <%}%>
+            </div>
+        </div>
+    </div>
+</main>

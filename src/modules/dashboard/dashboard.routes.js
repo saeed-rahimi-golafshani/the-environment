@@ -10,6 +10,7 @@ const { UserRoutes } = require("./user/user.routes");
 const { RoleRoutes } = require("./role/role.routes");
 const { PermissionRoutes } = require("./permission/permission.routes");
 const { RolePermissionRoutes } = require("./role_permission/role_permission.routes");
+const { RoleUserRoutes } = require("./role_user/role_user.routes");
 
 const router = Router();
 router.get("/", DashboardController.dashboard);
@@ -23,6 +24,7 @@ router.use("/users", UserRoutes);
 router.use("/role", RoleRoutes);
 router.use("/permission", PermissionRoutes);
 router.use("/role_permission", RolePermissionRoutes);
+router.use("/operator", RoleUserRoutes);
 
 module.exports = {
     DashboardRoutes: router
