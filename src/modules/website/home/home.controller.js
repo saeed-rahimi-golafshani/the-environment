@@ -16,15 +16,17 @@ class HomeController{
     }
     async HomePage(req, res, next){
         try {
-            let setting,getTwoLine, listOfBlogCategoryParent, listOfBlogCategoryByParent, user, accessToken;
+            let setting,getTwoLine, listOfBlogCategoryParent, listOfBlogCategoryByParent, user, accessToken, operator;
             setting = await this.#setting_service.listOfSetting();
             getTwoLine = await this.#setting_service.getLineDescription();
             listOfBlogCategoryParent = await this.#blogCategory_Service.listOfBlogCategoryWitoutParent();
             listOfBlogCategoryByParent = await this.#blogCategory_Service.listOfBlogCategoryByParent();
-            console.log(req.cookies);
+           
             accessToken = req.cookies.access_token;
             user = await this.#service.userToken(req);
-
+            if(req.user){
+                operator = await this.#service.openDashbord(req);
+            }
             if(setting.launching_status == true){
                 res.locals.layout = "./layouts/website/static_page/main.ejs";
                 res.render("./pages/website/coming_soon/coming-soon.ejs", {
@@ -39,7 +41,8 @@ class HomeController{
                  listOfBlogCategoryParent,
                  listOfBlogCategoryByParent,
                  accessToken,
-                 user
+                 user,
+                 operator
                 });
             }
         } catch (error) {

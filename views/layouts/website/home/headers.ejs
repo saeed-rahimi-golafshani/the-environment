@@ -132,8 +132,11 @@
                                     <%}%>
 
                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                          <a class="dropdown-item" href="#">Action</a>
-                                          <a class="dropdown-item" href="#">Another action</a>
+                                             <%if(operator.role_id.slug == "SUPER_ADMIN" || operator.role_id.slug == "ADMIN"){%> 
+                                                <a class="dropdown-item" href="/dashboard">ورود به پنل مدیریت</a>
+                                                <%} else if(user.user_default_role == "USER"){%> 
+                                                   <a class="dropdown-item" href="#">ورود به پروفایل</a>
+                                                   <%}%>
                                           <a class="dropdown-item" href="/users/logout">خروج از حساب کاربری</a>
                                        </div>
                            </li>

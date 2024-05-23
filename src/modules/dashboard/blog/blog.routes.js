@@ -2,6 +2,8 @@ const { Router } = require("express");
 const BlogController = require("./blog.controller");
 const { uploadFile } = require("../../../common/utills/multer");
 const { stringToArray } = require("../../../common/exeption/string_to_array");
+const { PERMISSIONS } = require("../../../common/utills/constrant");
+const { checkPermission } = require("../../../common/guard/permission.guard");
 
 const router = Router();
 router.get("/", BlogController.blogsOFList);

@@ -110,4 +110,26 @@ module.exports = {
         CODE: "code",
         TARGET: "target"
     }),
+    PERMISSIONS: Object.freeze(
+        {
+            SUPER_ADMIN: "all",
+            ADMIN: [
+ 
+                "blogs", 
+                "blog_categories",
+                "users",
+                "news",
+                "news_category",
+                "project",
+                "project_category",
+
+            ],
+            AUTHOR: ["blogs", "blog_categories"],
+
+            EMPLOYE: ["products", "product_categories", "product_types"],
+            USERS: ["profiles"],
+            BUYERS: ["profiles"],
+            
+            TEACHER: ["blogs"]
+        }),
 }

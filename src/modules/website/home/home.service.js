@@ -3,15 +3,17 @@ const { authMessageGaurd } = require("../../../common/messages/auth.message");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../../dashboard/user/user_model");
 const createHttpError = require("http-errors");
+const RoleUserModel = require("../../dashboard/role_user/role_user.model");
 require("dotenv").config();
 
 class HomeService {
     #userModel;
+    #roleUser;
 
     constructor() {
         auto_bind(this);
         this.#userModel = UserModel
-        
+        this.#roleUser = RoleUserModel;
     }
     async userToken(req, next){
         let user;
@@ -28,7 +30,16 @@ class HomeService {
             throw new createHttpError.Unauthorized(authMessageGaurd.invalidToken);
         }
         
-    }
+    };
+    async openDashbord(req){
+        const user = req.user;
+        const operator = await this.#roleUser.findOne({user_id: user._id}).populate([
+            {path: "user_id"},
+            {path: "role_id"}
+        ])
+        return operator
+    };
+    
     
 }
     
