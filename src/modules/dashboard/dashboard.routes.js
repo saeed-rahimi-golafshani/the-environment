@@ -15,6 +15,10 @@ const {
 const { RoleUserRoutes } = require("./role_user/role_user.routes");
 const { checkPermission } = require("../../common/guard/permission.guard");
 const { PERMISSIONS } = require("../../common/utills/constrant");
+const { EventCategoryRoutes } = require("./event_category/event_category.routes");
+const { eventStatusRoutes } = require("./event_status/event_status.routes");
+const { EventPartnerRoutes } = require("./event_partner/event_partner.routes");
+const { StateRoutes } = require("./address_state/state.routes");
 
 const router = Router();
 router.get("/", DashboardController.dashboard);
@@ -69,6 +73,28 @@ router.use(
     checkPermission([PERMISSIONS.SUPER_ADMIN]),
     RoleUserRoutes
 );
+router.use(
+    "/event_category",
+    checkPermission([PERMISSIONS.SUPER_ADMIN, PERMISSIONS.ADMIN]),
+    EventCategoryRoutes
+);
+router.use(
+    "/event_status",
+    checkPermission([PERMISSIONS.SUPER_ADMIN, PERMISSIONS.ADMIN]),
+    eventStatusRoutes
+);
+router.use(
+    "/event_partner",
+    checkPermission([PERMISSIONS.SUPER_ADMIN, PERMISSIONS.ADMIN]),
+    EventPartnerRoutes
+);
+router.use(
+    "/state",
+    checkPermission([PERMISSIONS.SUPER_ADMIN, PERMISSIONS.ADMIN]),
+    StateRoutes
+);
+
+
 
 module.exports = {
     DashboardRoutes: router,

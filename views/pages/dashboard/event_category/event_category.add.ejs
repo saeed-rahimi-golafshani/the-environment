@@ -1,0 +1,135 @@
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+
+        <div class="card shadow mb-4">
+          <div class="card-header">
+            <strong class="card-title">افزودن دسته بندی رویداد</strong>
+            <a href="/dashboard/event_category"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-sign-out" style="margin: 5px;"></i>
+              بازگشت</a>
+            <a href="/dashboard/event_category/add"
+              style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+              <i class="fa fa-plus" style="margin: 5px;"></i>
+              افزودن</a>
+          </div>
+
+          <div class="card-body">
+
+            <form id="frm_eventCategory">
+              <div class="row">
+                <div class="col-md-6">
+
+                  <input type="text" name="code" id="code" value="<%= code%>" hidden>
+
+                  <div class="form-group mb-3">
+                    <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
+                    <input type="text" name="title" id="titleinput" class="form-control"
+                      style="background-color: rgb(243, 243, 243);">
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="sluginput" style="font-size: 0.9rem;">عنوان انگلیسی</label>
+                    <input type="text" id="sluginput" name="slug" class="form-control"
+                      style="background-color: rgb(243, 243, 243);">
+                  </div>
+
+
+                  <div class="form-group mb-3">
+                    <label for="parentinput" style="font-size: 0.9rem;">دسته بندی والد</label>
+
+                    <select name="parent" style="font-size: 0.75rem; background-color: rgb(243, 243, 243);"
+                      class="form-control select2" id="parentinput">
+                      <%if(eventCategories.paren){%>
+                        <option><%= eventCategories.parent.title%></option>
+                        <%}else{%>
+                          <option value="6589d430053a84a4ed2d9829">نامشخص</option>
+                          <%}%>
+                        <optgroup>
+                          <%eventCategories.forEach(item=> {%>
+                            <option value="<%=item._id%>">
+                              <%= item.title%>
+                            </option>
+                            <%})%>
+                              </optgroup>
+                    </select>
+                    <div class="invalid-feedback"> Please select a valid state. </div>
+
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="description">توضیحات</label>
+                    <div class="col-sm-12">
+                      <textarea name="description" class="form-control"
+                        style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="description" rows="6"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label style="font-size: 0.9rem;" for="tags">برچسب ها (با - جدا
+                      شود)</label>
+                    <div class="col-sm-12">
+                      <textarea name="tags" class="form-control"
+                        style="font-size: 0.8rem; background-color: rgb(243, 243, 243);" id="tags" rows="6"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3 col-sm-12">
+                    <label for="show_in_archive" style="font-size: 0.9rem;">نمایش در آرشیو</label>
+
+                    <select name="show_in_archive" style="background-color: rgb(243, 243, 243);" id="show_in_archive"
+                      class="form-control">
+                      <option selected value="true">فعال</option>
+                      <option value="false">غیر فعال</option>
+                    </select>
+
+                  </div>
+
+                  <div class="form-group mb-2">
+                    <button onclick="doSaveEventCategory()" class="btn btn-primary"
+                      style="padding: 5px 20px; font-size: 0.85rem;">ثبت
+                      اطلاعات</button>
+                  </div>
+
+                </div> <!-- /.col -->
+              </div>
+            </form>
+
+            <%if(messages){%>
+              <div class="alert">
+                <strong style="color: rgb(51, 141, 56);">
+                  <%= messages?? "" %>
+                </strong>
+              </div>
+              <%}%>
+                <%if(errors){%>
+
+                  <div class="alert">
+                    <strong style="color: rgb(245, 39, 108);">
+                      <%= errors?? "" %>
+                    </strong>
+                  </div>
+                  <%}%>
+
+          </div>
+        </div> <!-- / .card -->
+      </div> <!-- .col-12 -->
+    </div> <!-- .row -->
+  </div> <!-- .container-fluid -->
+</main> <!-- main -->
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    window.setTimeout(function () {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+        $(this).remove();
+      });
+    }, 2000);
+
+  });
+</script>

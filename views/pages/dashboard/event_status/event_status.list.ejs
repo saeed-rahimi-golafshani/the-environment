@@ -1,0 +1,83 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+  
+          <div class="row align-items-center mb-2">
+            <!-- داشبورد -->
+            <div class="col">
+              <h2 class="h5 page-title">وضعیت رویداد</h2>
+            </div>
+            <div>
+                <a href="/dashboard/event_status/add"
+                  style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                  <i class="fa fa-plus" style="margin: 5px;"></i>
+                  افزودن</a>
+  
+              </div>
+          </div>
+          <%if(showTable==true){%>
+          <div class="row">
+            <div class="col-md-12 my-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="toolbar">
+                    <div class="card-header">
+                      <strong class="card-title" style="font-size: 0.85rem; font-weight: normal; color: #1b68ff;"> تعداد
+                        نتایج : <%= eventStatusCount%> </strong>
+                    </div>
+                  </div>
+                  <table id="blogCategoryTable" class="table table-borderless table-hover">
+                    <thead>
+                      <tr style="font-size: 0.85rem;">
+                        <th>کد</th>
+                        <th>عنوان</th>
+                        <th>مدیریت</th>
+                      </tr>
+                    </thead>
+                    <%eventStatuses.forEach(item=>{%>
+                    <tbody>
+                      <tr>
+                      <tr style="font-size: 0.85rem;">
+                        <td><%= item.code%></td>
+                        <td><%= item.title%></td>                            
+                      
+                        <td>
+                          <a href="/dashboard/event_status/update/<%= item.code%>" class="btn mb-2 btn-outline-success"><i
+                              class="fa fa-edit"></i></a>
+                          <a href="/panel/user/id/" class="btn mb-2 btn-outline-success"><i class="far fa-eye"></i></a>
+                          <a href="" data-toggle="modal" data-target="#verticalModal"
+                            class="btn mb-2 btn-outline-success"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+  
+                      </tr>
+                      </tr>
+                    </tbody>  
+                    <%})%>
+                  </table>
+  
+  
+                  <nav aria-label="Table Paging" class="mb-0 text-muted" style="font-size: 0.7rem;">
+                    <ul class="pagination justify-content-center mb-0">
+                      <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div> <!-- customized table -->
+          </div>
+          <%} else {%>
+          <div class="col-12 text-center mb-4">
+            <i class="fas fa-exclamation-triangle" style="font-size: 72px; margin-bottom: 20px;"></i>
+            <!-- <img src="./assets/images/logo.svg" class="navbar-brand-img brand-sm mx-auto mb-4" alt="..."> -->
+            <h4>نتیجه ای یافت نشد</h4>
+          </div>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </main>

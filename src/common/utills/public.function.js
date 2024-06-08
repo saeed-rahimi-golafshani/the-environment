@@ -163,6 +163,12 @@ const alreadyExistBySlug = async (slug, model) => {
         throw new createHttpError.Conflict(PublicFunctionMessage.alreadySlug);
     return null;
 };
+const alreadyExistByTitle = async (title, model) => {
+    const alreadyExist = await model.find({ title });
+    if (alreadyExist)
+        throw new createHttpError.Conflict(PublicFunctionMessage.alreadySlug);
+    return null;
+};
 
 module.exports = {
     getPersianDate,
@@ -179,6 +185,7 @@ module.exports = {
     deleteFileInPathArray,
     checkExistById,
     alreadyExistBySlug,
+    alreadyExistByTitle,
     copyObject,
     convertDate,
     convertGetTimeToPersionDate,

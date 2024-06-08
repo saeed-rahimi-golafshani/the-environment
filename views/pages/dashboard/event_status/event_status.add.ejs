@@ -1,0 +1,78 @@
+<main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+  
+  
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <strong class="card-title">افزودن دسته بندی رویداد</strong>
+              <a href="/dashboard/event_status"
+                style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 20px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                <i class="fa fa-sign-out" style="margin: 5px;"></i>
+                بازگشت</a>
+              <a href="/dashboard/event_status/add"
+                style="color: #1b68ff; font-size: 0.85rem; text-decoration: none; margin: 2px ; border-radius: 10px; position: absolute; left: 120px; border: 1px solid #1b68ff; padding: 0px 10px;">
+                <i class="fa fa-plus" style="margin: 5px;"></i>
+                افزودن</a>
+            </div>
+  
+            <div class="card-body">
+  
+              <form id="frm_eventStatus">
+                <div class="row">
+                  <div class="col-md-6">
+  
+                    <input type="text" name="code" id="code" value="<%= code%>" hidden>
+  
+                    <div class="form-group mb-3">
+                      <label for="titleinput" style="font-size: 0.9rem;">عنوان</label>
+                      <input type="text" name="title" id="titleinput" class="form-control"
+                        style="background-color: rgb(243, 243, 243);">
+                    </div>
+
+                    <div class="form-group mb-2">
+                      <button onclick="doSaveEventStatus()" class="btn btn-primary"
+                        style="padding: 5px 20px; font-size: 0.85rem;">ثبت
+                        اطلاعات</button>
+                    </div>
+  
+                  </div> <!-- /.col -->
+                </div>
+              </form>
+  
+              <%if(messages){%>
+                <div class="alert">
+                  <strong style="color: rgb(51, 141, 56);">
+                    <%= messages?? "" %>
+                  </strong>
+                </div>
+                <%}%>
+                  <%if(errors){%>
+  
+                    <div class="alert">
+                      <strong style="color: rgb(245, 39, 108);">
+                        <%= errors?? "" %>
+                      </strong>
+                    </div>
+                    <%}%>
+  
+            </div>
+          </div> <!-- / .card -->
+        </div> <!-- .col-12 -->
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+  </main> <!-- main -->
+  
+  <script type="text/javascript">
+  
+    $(document).ready(function () {
+  
+      window.setTimeout(function () {
+        $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+          $(this).remove();
+        });
+      }, 2000);
+  
+    });
+  </script>

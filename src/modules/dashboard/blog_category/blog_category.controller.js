@@ -25,7 +25,7 @@ class BlogCategoryController {
         try {
             const { search, parent } = req.query;
             let listOfBlogCategory,
-                blogCategoryCount,
+                blogCategoryCount = 0,
                 showTable = false;
             if (search && parent == "") {
                 listOfBlogCategory = await this.#blogCategoryModel
@@ -79,7 +79,7 @@ class BlogCategoryController {
                 ]);
             }
 
-            if (listOfBlogCategory == 0) {
+            if (blogCategoryCount == 0) {
                 showTable = false;
             } else {
                 showTable = true;

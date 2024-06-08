@@ -1,5 +1,6 @@
 module.exports = {
     MOBILE_PATTERN: /^09[0-9]{9}$/,
+    PHONE_PATTERN: /^0\d{2,3}-\d{8}$/,
     MONGOID_PATTERN: /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i,
     FILENMAE_ICON_PATTERN: /(\.svg|\.png|\.ico|\.avif|\.jpg)$/,
     FILENMAE_IMAGE_PATTERN: /(\.png|\.jpg|\.jpeg|\.webp|\.gif|\.jfif)$/,
@@ -27,6 +28,10 @@ module.exports = {
         PERMISSION: "PER",
         ROLEPERMISSION: "R_PER",
         OPERATOR: "OPET",
+        EVENT_CATEGORY: "CAT_EV",
+        EVENT_STATUS: "ST_EV",
+        EVENT_PARTNER: "PART_EV",
+        ADDRESS_STATE: "STAT",
 
         PRODUCT: "PRD",
         PRODUCT_CATEGORY: "CAT_PRD",
@@ -61,6 +66,23 @@ module.exports = {
         CODE: "code",
         CREATEAT: "createAt",
         UPDATEAT: "updateAt"
+    }),
+    EVENTCATEGORY_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEDAT: "createdAt",
+        UPDATEDAT: "updatedAt"
+    }),
+    STATEADDRESS_BLACKLIST: Object.freeze({
+        CODE: "code"
+    }),
+    EVENTSTATUS_BLACKLIST: Object.freeze({
+        CODE: "code"
+    }),
+    
+    EVENTPARTNER_BLACKLIST: Object.freeze({
+        CODE: "code",
+        CREATEDAT: "createdAt",
+        UPDATEDAT: "updatedAt"
     }),
     PERMISSION_BLACKLIST: Object.freeze({
         CODE: "code",
